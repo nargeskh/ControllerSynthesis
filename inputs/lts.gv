@@ -500,6 +500,14 @@ a6c2q0d0s0v7w2k0b0g0pn26s1->a6c2q0d0s0v7w2k0b0g0po27s1[label= "env.conn(srv1,DBB
 a0c2q0d0s0v7w2k0b0g0po14s0->a0c2q0d0s0v7w2k0b0g0pp15s0[label= "env.conn(srv1,agg)"];
 
 }
+
+The Product of SPEC and PLANT is :
+No. of States/Transitions of Product:10302/34671
+
+
+
+Controller after removing un-coaccesible states:
+No States/Transitions of final adaptor:6138/21785
 }
 
 

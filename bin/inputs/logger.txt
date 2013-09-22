@@ -1,4 +1,0 @@
-digraph{
-q0->q0[label= "lgr.log(x)?"];
-q1->q1[label= "env.NO()"];
-}

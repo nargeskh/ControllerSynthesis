@@ -1,4 +1,0 @@
-digraph { 
-g0->g0[label="agg.respond(y)?"];
-g1->g1[label= "end.NOP(y)"];
-}

@@ -1,0 +1,8 @@
+digraph { 
+a6c2q0d0s0v7w0k0b0g0pg19s1->a0c2q0d1s0v7w0k0b0g0pg19s0[label= "disp.req(srv1,x)"];
+a1c2q0d1s0v7w0k0b0g0pg19s1->a1c2q0d0s1v7w0k0b0g0pg19s1[label= "srv1.serve(x)"];
+a0c2q0d1s0v7w0k0b0g0pg19s0->a1c2q0d1s0v7w0k0b0g0pg19s1[label= "ana.req(x)"];
+a6c2q0d0s1v7w0k0b0g0pg19s1->a6c2q0d0s3v7w0k0b0g0pg19s1[label= "DBB.getData(x)"];
+a1c2q0d0s1v7w0k0b0g0pg19s1->a6c2q0d0s1v7w0k0b0g0pg19s1[label= "lgr.log(x)"];
+
+}

@@ -83,12 +83,12 @@ public class GraphAutomata{
 		return false;
 	}
 
-	public static GraphAutomata parseGraphAutomata(String filename, String s0, String finals) throws IOException, NoStateExistException
+	public static GraphAutomata parseGraphAutomata(String filename, String s0, String finals, String inPath) throws IOException, NoStateExistException
 	{
 		GraphAutomata automata = new GraphAutomata();
 		automata.ID = filename;
 		try {
-			BufferedReader br = new BufferedReader(new FileReader("/Volumes/Miscellaneous/Eclipse Workspace/ControllerSyn/src/inputs/" + filename + ".txt"));
+			BufferedReader br = new BufferedReader(new FileReader( inPath + filename + ".txt"));
 			StringBuilder sb = new StringBuilder();
 			String line = br.readLine();
 

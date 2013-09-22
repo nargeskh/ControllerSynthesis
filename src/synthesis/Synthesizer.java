@@ -329,7 +329,7 @@ public class Synthesizer {
 		return res;
 	}
 
-	public gLTS removeCycles(gLTS controller) {
+	public gLTS removeCycles(gLTS controller, String outPath) {
 		// the second parameter shows the final state of the reconfiguration
 		//controller = getPrioritizedLTS(controller, "pp");
 		controller = getForwardablegLTS(controller, "pp");
@@ -342,8 +342,9 @@ public class Synthesizer {
 				+Integer.toString(controller.trans.size()) );// + controller.draw());
 
 		controller = removeDanglingTransitions(controller);
+		MainCS.putIntoFile(controller.draw(), outPath, "SecondFinalAdaptor");
 		out.println("No States/Transitions of Final Adaptor:" + Integer.toString(controller.states.size()) + "/" 
-				+Integer.toString(controller.trans.size()) + controller.draw());
+				+Integer.toString(controller.trans.size()));//+ controller.draw());
 
 		return controller;
 	}

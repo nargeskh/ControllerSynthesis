@@ -699,7 +699,7 @@ public class gLTS {
 		gLTS glts = new gLTS();
 		glts.ID = ltsName;
 		try {
-			BufferedReader br = new BufferedReader(new FileReader("/Volumes/Miscellaneous/Eclipse Workspace/ControllerSyn/src/inputs/" + filename + ".txt"));
+			BufferedReader br = new BufferedReader(new FileReader("/Volumes/Miscellaneous/Eclipse Workspace/ControllerSyn/inputs/" + filename + ".txt"));
 			//			BufferedReader br = new BufferedReader(new FileReader("/home/narges/workspace/CS/src/pack/"+filename+".txt"));
 
 			StringBuilder sb = new StringBuilder();

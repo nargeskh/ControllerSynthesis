@@ -234,7 +234,7 @@ public class MainCS {
 		gts.removeStateSplitter();
 		//	putIntoFile( gts.draw(), "model");
 
-		GraphAutomata spec = GraphAutomata.parseGraphAutomata("spec", "s0", "s0");
+		GraphAutomata spec = GraphAutomata.parseGraphAutomata("spec", "s0", "s0", outPath);
 		//spec.finalstates.add(spec.s0);
 
 		Synthesizer synth = new Synthesizer();
@@ -243,9 +243,9 @@ public class MainCS {
 
 	}
 
-	private static void test_synthesise_phase() throws IOException, NoStateExistException {
+	private static void test_synthesise_phase(String outPath) throws IOException, NoStateExistException {
 
-		GraphAutomata spec = GraphAutomata.parseGraphAutomata("specTest", "s0", "s0");
+		GraphAutomata spec = GraphAutomata.parseGraphAutomata("specTest", "s0", "s0", outPath);
 
 		Graph model = new Graph("model", "(1,1)1:plant|1->1:plantplant");
 
@@ -273,9 +273,8 @@ public class MainCS {
 		//		putIntoFile( adaptor.draw(), "adaptor");
 	}
 
-	private static void synthesize() throws IOException, NoStateExistException {
+	private static void synthesize(String outPath) throws IOException, NoStateExistException {
 
-		String outPath = "/Volumes/Miscellaneous/Eclipse Workspace/ControllerSyn/output/";
 		long startTime = System.currentTimeMillis();
 
 		ArrayList<LTS>  ltslist = buildComponentModel(outPath);
@@ -289,16 +288,12 @@ public class MainCS {
 		gts.removeStateSplitter();
 		//	putIntoFile( gts.draw(), "model");
 
-		/*gLTS connectedConfigs = gts.findConnectedStatesofTwoConfigs("p4","p5");
-		out.println("The number of connecting states of p4 and p5 are " + 
-				Integer.toString(connectedConfigs.states.size()));*/
-
 		long endTime = System.currentTimeMillis();
 		long duration = endTime - startTime;
 		out.println("\nModel Construction Time:" + Long.toString(duration));
 
 		startTime = System.currentTimeMillis();
-		GraphAutomata spec = GraphAutomata.parseGraphAutomata("spec", "s0", "s0");
+		GraphAutomata spec = GraphAutomata.parseGraphAutomata("spec", "s0", "s0",outPath);
 		//spec.finalstates.add(spec.s0);
 
 
@@ -310,7 +305,7 @@ public class MainCS {
 
 		//printEachConfigAdaptor(adaptor, plan);	
 
-		adaptor = synth.removeCycles(adaptor);
+		adaptor = synth.removeCycles(adaptor, outPath);
 		printEachConfigAdaptor(adaptor, plan, outPath);
 	}
 
@@ -327,7 +322,8 @@ public class MainCS {
 	}
 
 	public static void main(String[] args) throws IOException, NoStateExistException {
-		synthesize();
+		String outPath = "/Volumes/Miscellaneous/Eclipse Workspace/ControllerSyn/inputs/";
+		synthesize(outPath);
 		//test_synthesise_phase();
 		//	test_synthesise_phase2();
 	}

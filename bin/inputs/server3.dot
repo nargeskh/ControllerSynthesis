@@ -1,3 +1,0 @@
-digraph { 
-w0->w1[label= "srv3.serve(x)?"];w1->w2[label= "DBB.getData(x)?"];w2->w3[label= "srv3.process(x)"];w3->w0[label= "srv2.response(y)!"];
-}

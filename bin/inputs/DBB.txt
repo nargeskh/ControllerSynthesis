@@ -1,4 +1,0 @@
-digraph { 
-b0->b0[label= "DBB.getData(x)!"];
-b1->b1[label= "env.NOP(y)"];
-}
