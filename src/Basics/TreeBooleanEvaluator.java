@@ -1,9 +1,9 @@
-package Basics;
+package basics;
 
 //import Expression;
-import gLTS.Event;
-import gLTS.gState;
-import gLTS.gTransition;
+import graphLTS.Event;
+import graphLTS.gState;
+import graphLTS.gTransition;
 import graphTransformation.Graph;
 import graphTransformation.Match;
 import graphTransformation.Morphism;

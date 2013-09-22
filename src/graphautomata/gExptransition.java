@@ -1,8 +1,8 @@
-package graphautomata;
+package graphAutomata;
 
-import gLTS.gState;
-import gLTS.gTransition;
-import gLTS.State;
+import graphLTS.State;
+import graphLTS.gState;
+import graphLTS.gTransition;
 
 public class gExptransition {
 

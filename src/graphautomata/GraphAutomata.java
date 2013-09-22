@@ -1,8 +1,8 @@
-package graphautomata;
+package graphAutomata;
 
-import gLTS.NoStateExistException;
-import gLTS.gTransition;
-import gLTS.State;
+import graphLTS.NoStateExistException;
+import graphLTS.State;
+import graphLTS.gTransition;
 
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
@@ -12,7 +12,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-import Basics.TreeBooleanEvaluator;
+import basics.TreeBooleanEvaluator;
 
 public class GraphAutomata{
 
