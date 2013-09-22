@@ -1,3 +1,11 @@
 digraph { 
+a2c1q1d0s5v7w0k0b0g0pc2s1->a2c1q1d0s0v7w0k0b0g0pc2s1[label= "agg.respond(y)"];
+a2c1q1d0s0v7w0k0b0g0pc2s1->a7c0q1d0s0v7w0k0b0g0pc2s1[label= "ch.rep(srv1,x)"];
+a1c0q1d0s2v7w0k0b0g0pc2s1->a1c0q1d0s5v7w0k0b0g0pc2s1[label= "srv1.process(x)"];
+a1c0q1d0s1v7w0k0b0g0pc2s1->a1c0q1d0s2v7w0k0b0g0pc2s1[label= "DBA.getData(x)"];
+a0c0q1d1s0v7w0k0b0g0pc2s0->a1c0q1d1s0v7w0k0b0g0pc2s1[label= "ana.req(x)"];
+a7c0q1d0s0v7w0k0b0g0pc2s1->a0c0q1d1s0v7w0k0b0g0pc2s0[label= "disp.req(srv1,x)"];
+a1c0q1d0s5v7w0k0b0g0pc2s1->a2c1q1d0s5v7w0k0b0g0pc2s1[label= "ch.req(x)"];
+a0c0q1d0s1v7w0k0b0g0pc2s0->a1c0q1d0s1v7w0k0b0g0pc2s1[label= "ana.req(x)"];
 
 }

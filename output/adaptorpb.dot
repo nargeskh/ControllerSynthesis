@@ -1,3 +1,9 @@
 digraph { 
+a0c2q1d0s0v1w0k0b0g0pb1s1->a1c2q1d0s0v1w0k0b0g0pb1s1[label= "ana.req(x)"];
+a1c2q1d0s0v1w0k0b0g0pb1s1->a1c2q1d0s0v3w0k0b0g0pb1s1[label= "DBB.getData(x)"];
+a1c2q1d0s0v3w0k0b0g0pb1s1->a1c2q1d0s0v5w0k0b0g0pb1s1[label= "srv2.process(x)"];
+a1c2q1d0s0v3w0k0b0g0pb1s1->a1c2q1d0s0v4w0k0b0g0pb1s1[label= "DBA.getData(x)"];
+a1c2q1d0s0v4w0k0b0g0pb1s1->a1c2q1d0s0v5w0k0b0g0pb1s1[label= "srv2.process(x)"];
+a1c2q1d0s0v5w0k0b0g0pb1s1->a1c2q1d0s0v0w0k0b0g0pb1s1[label= "agg.respond(y)"];
 
 }

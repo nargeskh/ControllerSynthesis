@@ -1,3 +1,5 @@
 digraph { 
+a1c2q0d0s0v7w0k0b0g0pf18s1->a6c2q0d0s0v7w0k0b0g0pf18s1[label= "lgr.log(x)"];
+a6c2q0d0s0v7w0k0b0g0pf18s1->a0c2q0d3s0v7w0k0b0g0pf18s1[label= "disp.req(srv3,x)"];
 
 }

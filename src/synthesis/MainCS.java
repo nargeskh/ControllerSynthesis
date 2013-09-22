@@ -78,8 +78,8 @@ public class MainCS {
 		LTS receiver = LTS.parseLTS("receiver","receiver","a0","a0");
 		receiver.addInitRemovalStates("a0" , "a1");
 
-		LTS dispatcher = LTS.parseLTS("dispatcher","disp","d3","d4");
-		dispatcher.addInitRemovalStates("d3" , "d3");
+		LTS dispatcher = LTS.parseLTS("dispatcher","disp","d0","d4");
+		dispatcher.addInitRemovalStates("d0" , "d0");
 
 		LTS server1 = LTS.parseLTS("server1","srv1","s0","s6");
 		server1.addInitRemovalStates("s0" , "s0");

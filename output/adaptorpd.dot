@@ -1,3 +1,9 @@
 digraph { 
+a1c2q1d1s0v7w0k0b0g0pd3s1->a1c2q1d0s1v7w0k0b0g0pd3s1[label= "srv1.serve(x)"];
+a1c2q1d0s5v7w0k0b0g0pd3s1->a1c2q1d0s0v7w0k0b0g0pd3s1[label= "agg.respond(y)"];
+a1c2q1d0s2v7w0k0b0g0pd3s1->a1c2q1d0s4v7w0k0b0g0pd3s1[label= "DBB.getData(x)"];
+a1c2q1d0s2v7w0k0b0g0pd3s1->a1c2q1d0s5v7w0k0b0g0pd3s1[label= "srv1.process(x)"];
+a1c2q1d0s1v7w0k0b0g0pd3s1->a1c2q1d0s2v7w0k0b0g0pd3s1[label= "DBA.getData(x)"];
+a1c2q1d0s4v7w0k0b0g0pd3s1->a1c2q1d0s5v7w0k0b0g0pd3s1[label= "srv1.process(x)"];
 
 }
