@@ -1,15 +1,9 @@
 digraph { 
-a6c2q0d0s0v7w0k0b0g0pn13s1->a0c2q0d1s0v7w0k0b0g0pn13s0[label= "disp.req(srv1,x)"];
-a0c2q0d0s3v7w0k0b0g0pn13s0->a1c2q0d0s3v7w0k0b0g0pn13s1[label= "ana.req(x)"];
-a0c2q0d1s5v7w0k0b0g0pn26s0->a1c2q0d1s5v7w0k0b0g0pn26s1[label= "ana.req(x)"];
-a1c2q0d0s3v7w0k0b0g0pn13s1->a6c2q0d0s3v7w0k0b0g0pn13s1[label= "lgr.log(x)"];
-a0c2q0d1s0v7w0k0b0g0pn13s0->a0c2q0d0s1v7w0k0b0g0pn13s0[label= "srv1.serve(x)"];
-a0c2q0d1s1v7w0k0b0g0pn26s0->a0c2q0d1s3v7w0k0b0g0pn26s0[label= "DBB.getData(x)"];
+a1c2q0d1s0v7w1k0b0g0pn26s1->a1c2q0d0s1v7w1k0b0g0pn26s1[label= "srv1.serve(x)"];
+a6c2q0d0s0v7w1k0b0g0pn26s1->a0c2q0d1s0v7w1k0b0g0pn26s0[label= "disp.req(srv1,x)"];
+a1c2q0d0s1v7w1k0b0g0pn26s1->a1c2q0d0s2v7w1k0b0g0pn26s1[label= "DBA.getData(x)"];
+a0c2q0d1s0v7w1k0b0g0pn26s0->a1c2q0d1s0v7w1k0b0g0pn26s1[label= "ana.req(x)"];
+a1c2q0d0s2v7w1k0b0g0pn26s1->a1c2q0d0s5v7w1k0b0g0pn26s1[label= "srv1.process(x)"];
 a6c2q0d3s0v7w0k0b0g0pn26s1->a6c2q0d0s0v7w1k0b0g0pn26s1[label= "srv3.serve(x)"];
-a6c2q0d0s0v7w1k0b0g0pn26s1->a6c2q0d0s0v7w2k0b0g0pn26s1[label= "DBB.getData(x)"];
-a0c2q0d1s3v7w0k0b0g0pn26s0->a0c2q0d1s5v7w0k0b0g0pn26s0[label= "srv1.process(x)"];
-a1c2q0d0s0v7w0k0b0g0pn13s1->a6c2q0d0s0v7w0k0b0g0pn13s1[label= "lgr.log(x)"];
-a0c2q0d0s1v7w0k0b0g0pn13s0->a0c2q0d0s3v7w0k0b0g0pn13s0[label= "DBB.getData(x)"];
-a0c2q0d0s0v7w0k0b0g0pn13s0->a1c2q0d0s0v7w0k0b0g0pn13s1[label= "ana.req(x)"];
 
 }
