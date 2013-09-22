@@ -1,5 +1,0 @@
-digraph { 
-a6c2q0d1s0v7w0k0b0g0pl24s1->a6c2q0d0s1v7w0k0b0g0pl24s1[label= "srv1.serve(x)"];
-a6c2q0d0s1v7w0k0b0g0pl24s1->a6c2q0d0s2v7w0k0b0g0pl24s1[label= "DBA.getData(x)"];
-
-}
