@@ -1,0 +1,12 @@
+digraph { 
+s0->s1[label= "srv1.serve(x)?"];
+s1->s2[label= "DBA.getData(x)?"];
+s1->s3[label= "DBB.getData(x)?"];
+s2->s4[label= "DBB.getData(x)?"];
+s3->s4[label= "DBA.getData(x)?"];
+s2->s5[label= "srv1.process(x)"];
+s3->s5[label= "srv1.process(x)"];
+s4->s5[label= "srv1.process(x)"];
+s5->s0[label= "agg.respond(y)!"];
+s6->s6[label= "env.NOP(y)"];
+}

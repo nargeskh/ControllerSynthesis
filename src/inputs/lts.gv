@@ -1,0 +1,43 @@
+digraph { 
+a0c2q1d0s0v7w0k0b0g0p33s0->a0c2q0d0s0v7w0k0b0g0p44s0[label= "env.add(lgr)"];
+a0c2q0d0s0v7w0k0b0g0p821s0->a0c2q0d0s0v7w0k0b0g0p922s0[label= "env.dis(disp,srv2)"];
+a0c0q1d0s0v0w0k0b0g0p00s0->a0c2q1d0s0v0w0k0b0g0p12s0[label= "env.del(ch)"];
+a0c2q0d0s0v7w0k0b0g0p619s0->a0c2q0d0s0v7w0k0b0g0p720s0[label= "env.dis(srv2,srv3)"];
+a0c2q0d0s0v7w0k0b0g0p1010s0->a0c2q0d0s0v7w0k0b0g0p1111s0[label= "env.dis(srv2,agg)"];
+a0c2q0d0s0v7w0k0b0g0p55s0->a0c2q0d0s0v7w0k0b0g0p66s0[label= "env.dis(receiver,ch)"];
+a0c2q0d0s0v7w0k0b0g0p99s0->a0c2q0d0s0v7w0k0b0g0p1010s0[label= "env.dis(srv2,DBB)"];
+a0c0q1d0s0v0w0k0b0g0p00s0->a0c0q1d0s0v7w0k0b0g0p21s0[label= "end.del(srv2)"];
+a0c2q0d0s0v7w0k0b0g0p1515s0->a1c2q0d0s0v7w0k0b0g0p1515s1[label= "ana.req(x)"];
+a0c0q1d0s0v7w0k0b0g0p21s0->a0c2q1d0s0v7w0k0b0g0p316s0[label= "env.del(ch)"];
+a0c2q0d0s0v7w0k0b0g0p1326s0->a0c2q0d0s0v7w0k0b0g0p1427s0[label= "env.conn(srv1,DBB)"];
+a0c2q0d0s0v7w0k0b0g0p417s0->a0c2q0d0s0v7w0k0b0g0p518s0[label= "anv.conn(receiver,lgr)"];
+a0c2q0d0s0v7w0k0b0g0p44s0->a0c2q0d0s0v7w0k0b0g0p55s0[label= "anv.conn(receiver,lgr)"];
+a0c2q0d0s0v7w0k0b0g0p77s0->a0c2q0d0s0v7w0k0b0g0p88s0[label= "env.dis(srv3,srv2)"];
+a0c2q0d0s0v7w0k0b0g0p1414s0->a0c2q0d0s0v7w0k0b0g0p1515s0[label= "env.conn(srv1,agg)"];
+a0c2q1d0s0v0w0k0b0g0p12s0->a0c2q1d0s0v7w0k0b0g0p33s0[label= "env.del(srv2)"];
+a0c2q0d0s0v7w0k0b0g0p922s0->a0c2q0d0s0v7w0k0b0g0p1023s0[label= "env.dis(srv2,DBB)"];
+a0c2q0d0s0v7w0k0b0g0p1313s0->a0c2q0d0s0v7w0k0b0g0p1414s0[label= "env.conn(srv1,DBB)"];
+a0c2q0d0s0v7w0k0b0g0p88s0->a0c2q0d0s0v7w0k0b0g0p99s0[label= "env.dis(disp,srv2)"];
+a0c2q0d0s0v7w0k0b0g0p1111s0->a0c2q0d0s0v7w0k0b0g0p1212s0[label= "env.conn(agg,lgr)"];
+a0c2q0d0s0v7w0k0b0g0p1124s0->a0c2q0d0s0v7w0k0b0g0p1225s0[label= "env.conn(agg,lgr)"];
+a0c2q0d0s0v7w0k0b0g0p1212s0->a0c2q0d0s0v7w0k0b0g0p1313s0[label= "env.conn(disp,srv3)"];
+a0c2q0d0s0v7w0k0b0g0p1528s0->a1c2q0d0s0v7w0k0b0g0p1528s1[label= "ana.req(x)"];
+a0c2q0d0s0v7w0k0b0g0p1225s0->a0c2q0d0s0v7w0k0b0g0p1326s0[label= "env.conn(disp,srv3)"];
+a0c2q0d0s0v7w0k0b0g0p720s0->a0c2q0d0s0v7w0k0b0g0p821s0[label= "env.dis(srv3,srv2)"];
+a0c2q0d0s0v7w0k0b0g0p66s0->a0c2q0d0s0v7w0k0b0g0p77s0[label= "env.dis(srv2,srv3)"];
+a0c2q1d0s0v7w0k0b0g0p316s0->a0c2q0d0s0v7w0k0b0g0p417s0[label= "env.add(lgr)"];
+a0c2q0d0s0v7w0k0b0g0p1023s0->a0c2q0d0s0v7w0k0b0g0p1124s0[label= "env.dis(srv2,agg)"];
+a0c2q0d0s0v7w0k0b0g0p1427s0->a0c2q0d0s0v7w0k0b0g0p1528s0[label= "env.conn(srv1,agg)"];
+a0c2q0d0s0v7w0k0b0g0p518s0->a0c2q0d0s0v7w0k0b0g0p619s0[label= "env.dis(receiver,ch)"];
+
+}
+
+
+
+
+
+DONOT REMOVE PLEASE!!!!!!!!!!!!!!!!
+s0->s0[label= "(disp.req[srv1,x] && (4:disp$5:srv1|4=>5:dispsrv1)) || (!ana.req[x])"];
+s0->s1[label= "(ana.reqx && (!srv1.req[x])) || (ana.reqx && !(4:disp$5:srv1|4=>5:dispsrv1))"];
+s1->s1[label= "!(4:disp$5:srv1|4=>5:dispsrv1) || !srv1.req[x]"];
+s1->s0[label= "(4:disp$5:srv1|4=>5:dispsrv1) && srv1.req[x]"];

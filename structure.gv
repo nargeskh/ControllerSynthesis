@@ -1,0 +1,16 @@
+p0->p1[label="env.del(ch)"];
+p0->p2[label= "end.del(srv2)"];
+p1->p3[label="env.del(srv2)"];
+p2->p3[label= "env.del(ch)"];
+p3->p4[label= "env.add(lgr)"];
+p4->p5[label= "anv.conn(receiver,lgr)"];
+p5->p6[label= "env.dis(receiver,ch)"];
+p6->p7[label= "env.dis(srv2,srv3)"];
+p7->p8[label= "env.dis(srv3,srv2)"];
+p8->p9[label= "env.dis(disp,srv2)"];
+p9->p10[label= "env.dis(srv2,DBB)"];
+p10->p11[label= "env.dis(srv2,agg)"];
+p11->p12[label= "env.conn(agg,lgr)"];
+p12->p13[label= "env.conn(disp,srv3)"];
+p13->p14[label= "env.conn(srv1,DBB)"];
+p14->p15[label= "env.conn(srv1,agg)"]

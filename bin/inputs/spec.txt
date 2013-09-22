@@ -1,0 +1,6 @@
+digraph { 
+s0->s0[label= "!ana.req[x]"];
+s0->s1[label= "ana.req[x]"];
+s1->s1[label= "!((disp.req[srv1,x]) && (4:disp$5:srv1|4=>5:dispsrv1))"];
+s1->s0[label= "(disp.req[srv1,x]) && (4:disp$5:srv1|4=>5:dispsrv1)"];
+}
