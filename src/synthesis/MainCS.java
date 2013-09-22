@@ -67,7 +67,7 @@ public class MainCS {
 	/*	return new gLTS(name, gs0, states, finals, trans);
 	}
 	 */
-	private static  ArrayList<LTS> buildComponentModel(String path) throws IOException, NoStateExistException {
+	private static  ArrayList<LTS> buildComponentModel(String outPath) throws IOException, NoStateExistException {
 
 		LTS logger = LTS.parseLTS("logger", "lgr", "q0","q1");
 		logger.addInitRemovalStates("q0" , "q0");
@@ -100,16 +100,16 @@ public class MainCS {
 		agg.addInitRemovalStates("g0" , "g0");
 
 		out.flush();
-		putIntoFile(logger.draw(), path, "logger");
-		putIntoFile(receiver.draw(),path, "receiver");
-		putIntoFile(logger.draw(), path, "logger");
-		putIntoFile(cache.draw(), path, "cache");
-		putIntoFile(dispatcher.draw(), path, "dispatcher");
-		putIntoFile(server1.draw(), path, "server1");
-		putIntoFile(server2.draw(), path, "server2");
-		putIntoFile(server3.draw(), path, "server3");
-		putIntoFile(DBA.draw(), path, "DBA");
-		putIntoFile(agg.draw(),path,  "agg");
+		putIntoFile(logger.draw(), outPath, "logger");
+		putIntoFile(receiver.draw(),outPath, "receiver");
+		putIntoFile(logger.draw(), outPath, "logger");
+		putIntoFile(cache.draw(), outPath, "cache");
+		putIntoFile(dispatcher.draw(), outPath, "dispatcher");
+		putIntoFile(server1.draw(), outPath, "server1");
+		putIntoFile(server2.draw(), outPath, "server2");
+		putIntoFile(server3.draw(), outPath, "server3");
+		putIntoFile(DBA.draw(), outPath, "DBA");
+		putIntoFile(agg.draw(),outPath,  "agg");
 
 		ArrayList<LTS> ltslist = new ArrayList<LTS>();
 		//the order of adding LTSs to the model should be same as their ID in structural model
@@ -322,7 +322,7 @@ public class MainCS {
 	}
 
 	public static void main(String[] args) throws IOException, NoStateExistException {
-		String outPath = "/Volumes/Miscellaneous/Eclipse Workspace/ControllerSyn/inputs/";
+		String outPath = "/Volumes/Miscellaneous/Eclipse Workspace/ControllerSyn/output/";
 		synthesize(outPath);
 		//test_synthesise_phase();
 		//	test_synthesise_phase2();

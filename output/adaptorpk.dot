@@ -1,5 +1,3 @@
 digraph { 
-a0c2q0d1s0v7w0k0b0g0pk10s0->a0c2q0d0s1v7w0k0b0g0pk10s0[label= "srv1.serve(x)"];
-a6c2q0d0s0v7w0k0b0g0pk10s1->a0c2q0d1s0v7w0k0b0g0pk10s0[label= "disp.req(srv1,x)"];
-
+null[fillcolor = red]
 }

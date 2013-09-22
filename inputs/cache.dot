@@ -1,3 +1,0 @@
-digraph { 
-c0->c1[label= "ch.req(x)?"];c1->c0[label= "ch.rep(srv1,x)!"];c1->c0[label= "ch.rep(srv2,x)!"];c1->c0[label= "ch.rep(srv3,x)!"];c1->c0[label= "ch.rep(NO,x)!"];c2->c2[label= "env.NOP(y)"];
-}

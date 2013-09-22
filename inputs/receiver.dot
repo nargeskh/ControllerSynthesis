@@ -1,3 +1,0 @@
-digraph { 
-a0->a1[label= "ana.req(x)"];a1->a6[label= "lgr.log(x)!"];a1->a2[label= "ch.req(x)!"];a2->a3[label= "ch.rep(srv3,x)?"];a2->a4[label= "ch.rep(NO,x)?"];a2->a5[label= "ch.rep(srv2,x)?"];a2->a7[label= "ch.rep(srv1,x)?"];a3->a0[label= "disp.req(srv3,x)!"];a4->a0[label= "disp.req(srv2,x)!"];a7->a0[label= "disp.req(srv1,x)!"];a4->a0[label= "disp.req(srv3,x)!"];a5->a0[label= "disp.req(srv2,x)!"];a6->a0[label= "disp.req(srv1,x)!"];a6->a0[label= "disp.req(srv2,x)!"];a6->a0[label= "disp.req(srv3,x)!"];
-}

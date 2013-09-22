@@ -1,8 +1,3 @@
 digraph { 
-a6c2q0d0s3v7w0k0b0g0ph20s1->a0c2q0d1s3v7w0k0b0g0ph20s0[label= "disp.req(srv1,x)"];
-a0c2q0d1s5v7w0k0b0g0ph20s0->a1c2q0d1s5v7w0k0b0g0ph20s1[label= "ana.req(x)"];
-a0c2q0d1s3v7w0k0b0g0ph20s0->a0c2q0d1s5v7w0k0b0g0ph20s0[label= "srv1.process(x)"];
-a0c2q0d1s4v7w0k0b0g0ph20s0->a0c2q0d1s5v7w0k0b0g0ph20s0[label= "srv1.process(x)"];
-a0c2q0d1s3v7w0k0b0g0ph20s0->a0c2q0d1s4v7w0k0b0g0ph20s0[label= "DBA.getData(x)"];
-
+null[fillcolor = red]
 }
