@@ -11,8 +11,11 @@ public class gTransition {
 	public gTransition() {
 		// TODO Auto-generated constructor stub
 	}
-	
+
 	public Event lab;
 	public gState src;	
-	public gState trg;	
+	public gState trg;
+	public String getLabel() {
+		return src.s.ID + lab.print_event() + trg.s.ID;
+	}	
 }

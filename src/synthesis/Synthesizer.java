@@ -12,28 +12,34 @@ import graphLTS.gTransition;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Stack;
 
 public class Synthesizer {
 
 	public gLTS synthesize(gLTS plant, 
 			GraphAutomata spec,
-			gLTS plan) 
+			gLTS plan,
+			List<String> uncontrolledEvents,
+			boolean drawing) 
 	{
 		gLTS controller = new gLTS();
 		try {
 			controller = product(plant , spec);
-			out.println("\nThe Product of SPEC and PLANT is :");// + controller.draw());
+			out.println("\nThe Product of SPEC and PLANT is :" + (drawing? controller.draw():""));
 			out.println("No. of States/Transitions of Product:" + Integer.toString(controller.states.size()) + "/" 
-					+Integer.toString(controller.trans.size()) );// + controller.draw());
+					+Integer.toString(controller.trans.size()) );
 
-			controller = removeBadStates(plant, controller);
-			out.println("\nController after removing bad states:");// + controller.draw());
+
+			controller = removeBadStates(plant, controller, uncontrolledEvents);
+			out.println("\nController after removing bad states:"  + (drawing? controller.draw():""));
+			out.println("No. of States/Transitions of Product:" + Integer.toString(controller.states.size()) + "/" 
+					+Integer.toString(controller.trans.size()) );
 
 			controller  = this.removeCounreachableStates(controller);
-			out.println("\nController after removing un-coaccesible states:");// + controller.draw());
+			out.println("\nController after removing un-coaccesible states:" + (drawing? controller.draw():""));
 			out.println("No States/Transitions of final adaptor:" + Integer.toString(controller.states.size()) + "/" 
-					+Integer.toString(controller.trans.size()) );// + controller.draw());
+					+Integer.toString(controller.trans.size()));
 
 		} 
 		catch (NoStateExistException e) {
@@ -99,7 +105,7 @@ public class Synthesizer {
 						if(!visited.contains(trgstate))
 							stack.push(trgstate);
 						gTransition gt = new gTransition(ptrans.lab, curstate, trgstate);
-						adaptor.trans.put(gt.src.s.ID + gt.trg.s.ID , gt);
+						adaptor.trans.put(gt.getLabel() , gt);
 
 						//if both plant and system model are in final states, then this state is final
 						if(spec.isfinalState(strans.trg.ID) &&
@@ -164,8 +170,41 @@ public class Synthesizer {
 		return controller;
 	}
 
+	//compare plant and controller, if there is a state from which there is an uncontrollable state
+	// that we have removed in the controller, then remove all its transitions and that state
 	private gLTS removeBadStates(gLTS plant,
-			gLTS controller) {
+			gLTS controller, List<String> uncontrollableEventlist) {
+
+		out.println("The initial state of the controller " + controller.s0.s.ID + "\n " +
+				"The initial state of plant " + plant.s0.s.ID );
+
+		ArrayList<String> badStates = new ArrayList<String>();
+
+		for(gState plantState : plant.states.values())
+		{
+			//			out.println("The current state of the plant " + plantState.s.ID );
+			gState controllerState = controller.getStateBeginWithID(plantState.s.ID);
+
+			if(controllerState!=null)
+			{
+				//	out.println("The current state of the controller " + controllerState.s.ID );
+
+				ArrayList<String> controllerOutEvents = controller.getOutEventsof(controllerState);
+				//	out.println("Number of out events of controller " + Integer.toString(controllerOutEvents.size()) );
+
+				ArrayList<String> plantOutEvents = plant.getUncontrollableEventsof(plantState, uncontrollableEventlist);
+				//	out.println("Number of uncontroller events of plant " + Integer.toString(plantOutEvents.size()) );
+
+				boolean notBadState = true;
+				for(String event: plantOutEvents)
+					notBadState = notBadState && (controllerOutEvents.contains(event));		
+
+				if(!notBadState)
+					badStates.add(controllerState.s.ID);
+			}
+		}
+
+		controller = controller.removeState (badStates);
 
 		return controller;
 	}

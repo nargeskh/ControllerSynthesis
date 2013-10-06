@@ -16,6 +16,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 public class MainCS {
 
@@ -236,16 +237,19 @@ public class MainCS {
 
 		GraphAutomata spec = GraphAutomata.parseGraphAutomata("spec", "s0", "s0", outPath);
 		//spec.finalstates.add(spec.s0);
+		List<String> uncontrolledEvents = new ArrayList<String>();
+		uncontrolledEvents.add("env.dis(srv3,srv2)");
+
 
 		Synthesizer synth = new Synthesizer();
-		gLTS adaptor = synth.synthesize(gts, spec,plan);
+		gLTS adaptor = synth.synthesize(gts, spec,plan, uncontrolledEvents,true);
 		//	putIntoFile( adaptor.draw(), "adaptor");
 
 	}
 
-	private static void test_synthesise_phase(String outPath) throws IOException, NoStateExistException {
+	private static void test_synthesise_phase(String inPath, String outPath) throws IOException, NoStateExistException {
 
-		GraphAutomata spec = GraphAutomata.parseGraphAutomata("specTest", "s0", "s0", outPath);
+		GraphAutomata spec = GraphAutomata.parseGraphAutomata("specTest", "s0", "s0", inPath);
 
 		Graph model = new Graph("model", "(1,1)1:plant|1->1:plantplant");
 
@@ -266,14 +270,23 @@ public class MainCS {
 		gts = gts.applyReconfiguration(ltslist, plan,false);
 		out.println("The system model is:\n" + gts.draw());
 		gts.removeStateSplitter();
+		
+		List<String> uncontrolledEvents = new ArrayList<String>();
+		uncontrolledEvents.add("env.dis(srv3,srv2)");
+		uncontrolledEvents.add("ana.req(x)");
+	//	uncontrolledEvents.add("env.del(srv2)");
+	//	uncontrolledEvents.add("env.del(ch)");
+	//	uncontrolledEvents.add("env.add(lgr)");
+			
+
 
 		Synthesizer synth = new Synthesizer();
-		gLTS adaptor = synth.synthesize(gts, spec,plan);
+		gLTS adaptor = synth.synthesize(gts, spec,plan, uncontrolledEvents,true);
 
-		//		putIntoFile( adaptor.draw(), "adaptor");
+		putIntoFile( adaptor.draw(), outPath, "adaptor");
 	}
 
-	private static void synthesize(String outPath) throws IOException, NoStateExistException {
+	private static void synthesize(String outPath, String inPath) throws IOException, NoStateExistException {
 
 		long startTime = System.currentTimeMillis();
 
@@ -293,12 +306,14 @@ public class MainCS {
 		out.println("\nModel Construction Time:" + Long.toString(duration));
 
 		startTime = System.currentTimeMillis();
-		GraphAutomata spec = GraphAutomata.parseGraphAutomata("spec", "s0", "s0",outPath);
+		GraphAutomata spec = GraphAutomata.parseGraphAutomata("spec", "s0", "s0",inPath);
 		//spec.finalstates.add(spec.s0);
 
+		List<String> uncontrolledEvents = new ArrayList<String>();
+		uncontrolledEvents.add("env.dis(srv3,srv2)");
 
 		Synthesizer synth = new Synthesizer();
-		gLTS adaptor = synth.synthesize(gts, spec, plan);
+		gLTS adaptor = synth.synthesize(gts, spec, plan, uncontrolledEvents,false);
 		endTime = System.currentTimeMillis();
 		duration = endTime - startTime;
 		out.println("Synthesis Time:" + Long.toString(duration));
@@ -323,8 +338,9 @@ public class MainCS {
 
 	public static void main(String[] args) throws IOException, NoStateExistException {
 		String outPath = "/Volumes/Miscellaneous/Eclipse Workspace/ControllerSyn/output/";
-		synthesize(outPath);
-		//test_synthesise_phase();
+		String inPath = "/Volumes/Miscellaneous/Eclipse Workspace/ControllerSyn/inputs/";
+		synthesize(outPath, inPath);
+		//test_synthesise_phase(inPath, outPath);
 		//	test_synthesise_phase2();
 	}
 

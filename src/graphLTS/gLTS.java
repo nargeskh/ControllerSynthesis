@@ -52,6 +52,11 @@ import java.util.Stack;
 
 
 
+
+
+
+
+
 import basics.ACTIVE;
 
 public class gLTS {
@@ -170,7 +175,8 @@ public class gLTS {
 			gt.src = getGStatebyID(gts.states, t.src.ID + id);
 			gt.trg = getGStatebyID(gts.states, t.trg.ID + id);
 			gt.lab = t.lab;			
-			gts.trans.put(gt.src.s.ID +gt.trg.s.ID , gt); 
+			// MODIFIED:			gts.trans.put(gt.src.s.ID +gt.trg.s.ID , gt); 
+			gts.trans.put(gt.getLabel() , gt); 
 		}		
 
 		//	out.println("\nThe  number of states of new created gLTS " + gts.ID + " is " + Integer.toString(gts.states.size()));
@@ -374,7 +380,9 @@ public class gLTS {
 			gState newtrg = trggLTS.getStatebyID(newtrgID);
 			if (newtrg != null)
 			{
-				trans.put( s.s.ID+ newtrg.s.ID , new gTransition(plantrans.lab, s, newtrg));
+				gTransition newTrans = new gTransition(plantrans.lab, s, newtrg);
+				// MODIFIEd: trans.put( s.s.ID+ newtrg.s.ID , new gTransition(plantrans.lab, s, newtrg));
+				trans.put( newTrans.getLabel() , newTrans );
 				connectingStates.put(newtrgID, newtrg); 
 			}
 			else
@@ -390,7 +398,7 @@ public class gLTS {
 		Iterator<gTransition> itera = trans.values().iterator();
 		while (itera.hasNext()) {
 			gTransition t1 = itera.next();
-			if(t1.src==s)
+			if(t1.src.equals(s))
 				res.add(t1);
 		}
 		return res;	
@@ -624,7 +632,8 @@ public class gLTS {
 			gState trg = newStates.get(mapping.get(oldt.trg.s.ID));
 
 			gTransition newt = new gTransition(oldt.lab, src, trg);
-			newTrans.put(src.s.ID + trg.s.ID + oldt.lab.recID  + oldt.lab.name , newt);
+			// MODIFIED newTrans.put(src.s.ID + trg.s.ID + oldt.lab.recID  + oldt.lab.name , newt);
+			newTrans.put(newt.getLabel() , newt);
 		}	
 
 		s0 = newStates.get(mapping.get(s0.s.ID));
@@ -660,7 +669,8 @@ public class gLTS {
 			gState trg = newStates.get(oldt.trg.s.ID.replace("@", ""));
 
 			gTransition newt = new gTransition(oldt.lab, src, trg);
-			newTrans.put(src.s.ID + trg.s.ID + oldt.lab.recID  + oldt.lab.name , newt);
+			//MODIFIED: newTrans.put(src.s.ID + trg.s.ID + oldt.lab.recID  + oldt.lab.name , newt);
+			newTrans.put(newt.getLabel() , newt);
 		}	
 
 		iter = finals.keySet().iterator();
@@ -755,7 +765,8 @@ public class gLTS {
 				Event e0 = new Event(type1, recId,msgName, arg);
 
 				gTransition t1 = new gTransition(e0,srcstate,trgstate);
-				glts.trans.put(srcstate.s.ID + trgstate.s.ID, t1);
+				// MODIFIED: glts.trans.put(srcstate.s.ID + trgstate.s.ID, t1);
+				glts.trans.put(t1.getLabel(), t1);
 			}
 			br.close();
 		} catch (FileNotFoundException e) {
@@ -851,6 +862,74 @@ public class gLTS {
 		}
 		return res;
 
+	}
+
+	public gState getStateBeginWithID(String iD2) {
+		Iterator<gState> iter = states.values().iterator();
+
+		while (iter.hasNext()) {
+			gState s = iter.next();
+			if (s.s.ID.startsWith(iD2))
+				return s;
+		}
+		return null;
+	}
+
+	public ArrayList<String> getOutEventsof(gState state) {
+		ArrayList<String> res = new ArrayList<String>();
+
+		Iterator<gTransition> itera = trans.values().iterator();
+		while (itera.hasNext()) {
+			gTransition t1 = itera.next();
+			if(t1.src.equals(state))
+				res.add(t1.lab.print_event());
+		}
+		return res;	
+	}
+
+	public ArrayList<String> getUncontrollableEventsof(gState state,
+			List<String> uncontrollableEventlist) {
+		ArrayList<String> res = new ArrayList<String>();
+
+		Iterator<gTransition> itera = trans.values().iterator();
+		while (itera.hasNext()) {
+			gTransition t1 = itera.next();
+			if(t1.src.equals(state) &&
+					uncontrollableEventlist.contains(t1.lab.print_event()))
+				res.add(t1.lab.print_event());
+		}
+		return res;	
+	}
+
+	public gLTS removeState(ArrayList<String> badStates) {
+
+		if(badStates.isEmpty())
+			return this;
+		HashMap<String, gTransition> resTrans = new HashMap<String, gTransition>();
+
+		for(gTransition t: this.trans.values())
+			if(!badStates.contains(t.src.s.ID) &&
+					!badStates.contains(t.trg.s.ID))
+				//				String t_label = t.src.s.ID + t.trg.s.ID;
+				//				resTrans.remove(t_label);
+				resTrans.put(t.getLabel(), t);
+			else
+				out.println("The transition from " + t.src.s.ID +  " to " + t.trg.s.ID + " with label " + t.lab.print_event() + " was removed" );
+
+		for(String s: badStates)
+		{
+			this.states.remove(s);
+
+			if(this.finals.containsKey(s))
+				finals.remove(s);
+
+			if(s0.equals(s))
+				s0 = null;
+
+			out.println("The state  " + s  + " was removed" );
+		}
+
+		return new gLTS(ID, s0, states, finals, resTrans);
 	}
 }
 

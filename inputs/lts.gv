@@ -501,14 +501,20 @@ a0c2q0d0s0v7w2k0b0g0po14s0->a0c2q0d0s0v7w2k0b0g0pp15s0[label= "env.conn(srv1,agg
 
 }
 
-The Product of SPEC and PLANT is :
-No. of States/Transitions of Product:10302/34671
-
-
+Controller after removing un-coaccesible states:
+No States/Transitions of final adaptor:0/0
+Synthesis Time:66754
 
 Controller after removing un-coaccesible states:
-No States/Transitions of final adaptor:6138/21785
-}
+No States/Transitions of final adaptor:6247/23147
+Synthesis Time:179266
+
+Controller after removing un-coaccesible states:
+No States/Transitions of final adaptor:7075/25715
+Synthesis Time:842283
+
+
+
 
 
 DONOT REMOVE PLEASE!!!!!!!!!!!!!!!!
@@ -516,3 +522,17 @@ s0->s0[label= "(disp.req[srv1,x] && (4:disp$5:srv1|4=>5:dispsrv1)) || (!ana.req[
 s0->s1[label= "(ana.reqx && (!srv1.req[x])) || (ana.reqx && !(4:disp$5:srv1|4=>5:dispsrv1))"];
 s1->s1[label= "!(4:disp$5:srv1|4=>5:dispsrv1) || !srv1.req[x]"];
 s1->s0[label= "(4:disp$5:srv1|4=>5:dispsrv1) && srv1.req[x]"];
+
+
+digraph { 
+s0->s0[label= "!ana.req[x]"];
+s0->s1[label= "ana.req[x]"];
+s1->s1[label= "!((ana.req[x]) 
+              || ((disp.req[srv2,x]) && (4:disp$6:srv2|4=>6:dispsrv2))
+			  || ((disp.req[srv1,x]) && (4:disp$5:srv1|4=>5:dispsrv1))
+			  || ((disp.req[srv3,x]) && (4:disp$7:srv3|4=>7:dispsrv3)))"];
+s1->s0[label= "(((disp.req[srv2,x]) && (4:disp$6:srv2|4=>6:dispsrv2))
+			    || ((disp.req[srv1,x]) && (4:disp$5:srv1|4=>5:dispsrv1))
+			    || ((disp.req[srv3,x]) && (4:disp$7:srv3|4=>7:dispsrv3)))"];
+}
+

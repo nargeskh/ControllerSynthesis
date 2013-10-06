@@ -132,6 +132,8 @@ public class GraphAutomata{
 				{
 					trgstate = new State(trg);
 					automata.states.add(trgstate);
+					if(trg.compareTo(s0)==0)
+						automata.s0 = trgstate;
 					if(finals.contains(trgstate.ID))
 						automata.finalstates.add(trgstate);
 				}

@@ -1,5 +1,3 @@
 digraph { 
 s0->s0[label= "!ana.req[x]"];
-s0->s1[label= "ana.req[x]"];
-s1->s1[label= "!ana.req[x]"];
 }
