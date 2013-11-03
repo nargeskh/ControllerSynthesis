@@ -100,7 +100,7 @@ public class GraphAutomata{
 			String everything = sb.toString().trim().replaceAll(" ", "");
 
 			// remove "digraph {"
-			everything = everything.substring(8,everything.length()-1);
+			everything = everything.substring(9,everything.length()-1);
 
 			//split to the set of lines
 			String[] substr = everything.split(";");

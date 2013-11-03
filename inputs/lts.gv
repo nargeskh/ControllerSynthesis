@@ -1,3 +1,23 @@
+
+digraph { 
+pm->pn[label= "env.conn(disp,srv3)"];
+pa->pb[label= "env.del(ch)"];
+po->pp[label= "env.conn(srv1,agg)"];
+pa->pc[label= "end.del(srv2)"];
+pj->pk[label= "env.dis(srv2,DBB)"];
+pl->pm[label= "env.conn(agg,lgr)"];
+pe->pf[label= "anv.conn(receiver,lgr)"];
+pb->pd[label= "env.del(srv2)"];
+pn->po[label= "env.conn(srv1,DBB)"];
+ph->pi[label= "env.dis(srv3,srv2)"];
+pg->ph[label= "env.dis(srv2,srv3)"];
+pf->pg[label= "env.dis(receiver,ch)"];
+pi->pj[label= "env.dis(disp,srv2)"];
+pd->pe[label= "env.add(lgr)"];
+pk->pl[label= "env.dis(srv2,agg)"];
+pc->pd[label= "env.del(ch)"];
+
+}
 digraph { 
 a6c2q0d1s5v7w0k0b0g0pi21s1->a6c2q0d1s0v7w0k0b0g0pi21s1[label= "agg.respond(y)"];
 a0c2q0d0s2v7w0k0b0g0po27s0->a0c2q0d0s2v7w0k0b0g0pp28s0[label= "env.conn(srv1,agg)"];

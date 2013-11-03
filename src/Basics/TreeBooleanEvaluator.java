@@ -60,7 +60,7 @@ public class TreeBooleanEvaluator extends AbstractEvaluator<String> {
 		String e = context.lab.recID + "." + context.lab.name +  "[" + context.lab.args + "]";
 
 		//System.out.println ("transition:"+ e + " graph: " + context.src.g.toString() + "\n expressions: " + literal);
-		//System.out.println ("transition:"+ e + "\n expressions: " + literal);
+		System.out.println ("transition:"+ e + ".......... expressions: " + literal);
 
 		boolean satGraphConst = false;
 		if(literal.contains("|"))
@@ -119,11 +119,11 @@ public class TreeBooleanEvaluator extends AbstractEvaluator<String> {
 	public static List<String> eval(TreeBooleanEvaluator evaluator, String expression) {
 		List<String> sequence = new ArrayList<String>();
 		evaluator.evaluate(expression, sequence);
-		/*	System.out.println ("Evaluation sequence for :"+expression);
+		System.out.println ("Evaluation sequence for :"+expression);
 		for (String string : sequence) {
 			System.out.println (string);
 		}
-		//System.out.println ();*/
+		System.out.println ();
 		return sequence;
 	}
 }

@@ -1,3 +1,5 @@
+// VERY IMPORTANT NOTE: The Node IDs of graph should be same (increased by one) with the order in the LTSs model defined in buildWODESComponentModel
+// The second point: the arguments of actions in spec should be in bracket "[]" rather parantheses "()"
 package synthesis;
 
 import static java.lang.System.out;
@@ -68,36 +70,36 @@ public class MainCS {
 	/*	return new gLTS(name, gs0, states, finals, trans);
 	}
 	 */
-	private static  ArrayList<LTS> buildComponentModel(String outPath) throws IOException, NoStateExistException {
+	private static  ArrayList<LTS> buildComponentModel(String inPath,String outPath) throws IOException, NoStateExistException {
 
-		LTS logger = LTS.parseLTS("logger", "lgr", "q0","q1");
+		LTS logger = LTS.parseLTS("logger", inPath, "lgr", "q0","q1");
 		logger.addInitRemovalStates("q0" , "q0");
 
-		LTS cache = LTS.parseLTS("cache","ch", "c0","c2");
+		LTS cache = LTS.parseLTS("cache", inPath,"ch", "c0","c2");
 		cache.addInitRemovalStates("c0" , "c1@c0");
 
-		LTS receiver = LTS.parseLTS("receiver","receiver","a0","a0");
+		LTS receiver = LTS.parseLTS("receiver", inPath,"receiver","a0","a0");
 		receiver.addInitRemovalStates("a0" , "a1");
 
-		LTS dispatcher = LTS.parseLTS("dispatcher","disp","d0","d4");
+		LTS dispatcher = LTS.parseLTS("dispatcher", inPath,"disp","d0","d4");
 		dispatcher.addInitRemovalStates("d0" , "d0");
 
-		LTS server1 = LTS.parseLTS("server1","srv1","s0","s6");
+		LTS server1 = LTS.parseLTS("server1",inPath,"srv1","s0","s6");
 		server1.addInitRemovalStates("s0" , "s0");
 
-		LTS server2 = LTS.parseLTS("server2","srv2","v0","v7");
+		LTS server2 = LTS.parseLTS("server2",inPath,"srv2","v0","v7");
 		server2.addInitRemovalStates("v0" , "v0");
 
-		LTS server3 = LTS.parseLTS("server3","srv3","w0","w4");
+		LTS server3 = LTS.parseLTS("server3",inPath,"srv3","w0","w4");
 		server3.addInitRemovalStates("w0" , "w0");
 
-		LTS DBA = LTS.parseLTS("DBA","DBA","k0","k1");
+		LTS DBA = LTS.parseLTS("DBA","DBA",inPath,"k0","k1");
 		DBA.addInitRemovalStates("k0" , "k0");
 
-		LTS DBB = LTS.parseLTS("DBB","DBB","b0","b1");
+		LTS DBB = LTS.parseLTS("DBB",inPath,"DBB","b0","b1");
 		DBB.addInitRemovalStates("b0" , "b0");
 
-		LTS agg = LTS.parseLTS("agg","agg","g0","g1");
+		LTS agg = LTS.parseLTS("agg",inPath,"agg","g0","g1");
 		agg.addInitRemovalStates("g0" , "g0");
 
 		out.flush();
@@ -125,6 +127,37 @@ public class MainCS {
 		ltslist.add(DBB);
 		ltslist.add(agg);
 
+		return ltslist;
+
+	}
+
+	private static  ArrayList<LTS> buildWODESComponentModel(String inPath,String outPath) throws IOException, NoStateExistException {
+
+		LTS logger = LTS.parseLTS("logger", inPath, "lgr", "b0","b1");
+		logger.addInitRemovalStates("b0" , "b0");
+
+		LTS cache = LTS.parseLTS("cache",inPath,"ch", "c0","c2");
+		cache.addInitRemovalStates("c0" , "c1@c0");
+
+		LTS receiver = LTS.parseLTS("receiver",inPath,"receiver","a3","a0");
+		receiver.addInitRemovalStates("a0" , "a1");
+
+		LTS server1 = LTS.parseLTS("server1",inPath,"srv1","d0","d1");
+		server1.addInitRemovalStates("d0" , "d0");
+
+		out.flush();
+		putIntoFile(logger.draw(), outPath, "logger");
+		putIntoFile(receiver.draw(),outPath, "receiver");
+		putIntoFile(cache.draw(), outPath, "cache");
+		putIntoFile(server1.draw(), outPath, "server1");
+
+		ArrayList<LTS> ltslist = new ArrayList<LTS>();
+		//the order of adding LTSs to the model should be same as their ID in structural model
+		ltslist.add(receiver);
+		ltslist.add(cache);
+		ltslist.add(server1);
+		ltslist.add(logger);
+		
 		return ltslist;
 
 	}
@@ -212,10 +245,25 @@ public class MainCS {
 		return model;
 	}
 
+	private static Graph getWODESPaperStructure()
+	{
+		String nodes = "1:receiver;2:ch;3:srv1";
+		String edges = 
+				"1->2:receiverch;"
+						+ "1->1:receiverreceiver;"
+						+ "1->3:receiversrv1;";
+		Graph model = new Graph("model", "(3,3)"+ nodes + "|" + edges);
+		out.println("The initial structure of system is:\n" + model.toDot());
+		//		putIntoFile( model.toDot(), "structure");
+
+		return model;
+	}
+
 	private static void test_synthesise_phase2() throws IOException, NoStateExistException {
 
 		String outPath = "/Volumes/Miscellaneous/Eclipse Workspace/ControllerSyn/output/";
-		ArrayList<LTS>  ltslist = buildComponentModel(outPath);
+		String inPath = "/Volumes/Miscellaneous/Eclipse Workspace/ControllerSyn/input/";
+		ArrayList<LTS>  ltslist = buildComponentModel(inPath,outPath);
 		Graph model = getHeavyLoadStructure(outPath);
 
 		// create an empty plan
@@ -261,7 +309,7 @@ public class MainCS {
 		HashMap<String, gTransition> trans = new HashMap<String, gTransition>();
 		gLTS plan = new gLTS("plan", planS0, planStates, planFinalStates, trans);
 
-		LTS agg = LTS.parseLTS("plant","plant","g0","g1");
+		LTS agg = LTS.parseLTS("plant", inPath, "plant","g0","g1");
 		agg.addInitRemovalStates("g0" , "g0");
 		ArrayList<LTS> ltslist = new ArrayList<LTS>();
 		ltslist.add(agg);
@@ -290,9 +338,9 @@ public class MainCS {
 
 		long startTime = System.currentTimeMillis();
 
-		ArrayList<LTS>  ltslist = buildComponentModel(outPath);
+		ArrayList<LTS>  ltslist = buildComponentModel(inPath, outPath);
 		Graph model = getHeavyLoadStructure(outPath);
-		gLTS plan = gLTS.parsegLTS("plan", "plan", "pa", model);
+		gLTS plan = gLTS.parsegLTS("plan",  inPath, "plan", "pa", model);
 		out.println("The reconfiguration plan:\n" + plan.draw());
 
 		gLTS gts = new gLTS();
@@ -321,11 +369,41 @@ public class MainCS {
 		//printEachConfigAdaptor(adaptor, plan);	
 
 		adaptor = synth.removeCycles(adaptor, outPath);
-		printEachConfigAdaptor(adaptor, plan, outPath);
+		printEachConfigAdaptor(adaptor, plan, outPath,"adaptor");
+	}
+
+	private static void WODESSynthesize(String inPath,String outPath) throws IOException, NoStateExistException {
+
+		ArrayList<LTS>  ltslist = buildWODESComponentModel(inPath, outPath);
+		Graph model = getWODESPaperStructure();
+		gLTS plan = gLTS.parsegLTS("plan", inPath, "plan", "pa", model);
+		out.println("The reconfiguration plan:\n" + plan.draw());
+
+		gLTS gts = new gLTS();
+		gts = gts.applyReconfiguration(ltslist, plan,false);
+		gts.removeStateSplitter();
+		putIntoFile( gts.draw(), outPath, "model");
+		printEachConfigAdaptor(gts, plan, outPath,"model");
+
+//		GraphAutomata spec = GraphAutomata.parseGraphAutomata("spec", "s0", "s0",inPath);
+
+		//this the example with no deadlock 
+	GraphAutomata spec = GraphAutomata.parseGraphAutomata("NoDeadlockSpec", "s0", "s0",inPath);
+
+		List<String> uncontrolledEvents = new ArrayList<String>();
+		uncontrolledEvents.add("X.a()");
+		uncontrolledEvents.add("X.e()");
+
+		Synthesizer synth = new Synthesizer();
+		gLTS adaptor = synth.synthesize(gts, spec, plan, uncontrolledEvents,false);
+
+		adaptor = synth.removeCycles(adaptor, outPath);
+		putIntoFile( adaptor.draw(), outPath, "adaptor");
+		printEachConfigAdaptor(adaptor, plan, outPath,"adaptor");
 	}
 
 
-	private static void printEachConfigAdaptor(gLTS adaptor, gLTS plan, String path) {
+	private static void printEachConfigAdaptor(gLTS adaptor, gLTS plan, String path, String fileName) {
 		for(gState s:plan.states.values())
 		{
 			gLTS configAdaptor = adaptor.getGLTSofConfig(s.s.ID);
@@ -337,9 +415,13 @@ public class MainCS {
 	}
 
 	public static void main(String[] args) throws IOException, NoStateExistException {
-		String outPath = "/Volumes/Miscellaneous/Eclipse Workspace/ControllerSyn/output/";
-		String inPath = "/Volumes/Miscellaneous/Eclipse Workspace/ControllerSyn/inputs/";
-		synthesize(outPath, inPath);
+	//	String outPath = "/Volumes/Miscellaneous/Eclipse Workspace/ControllerSyn/output/";
+	//	String inPath = "/Volumes/Miscellaneous/Eclipse Workspace/ControllerSyn/inputs/";
+		String outPath = "/Volumes/Miscellaneous/Eclipse Workspace/ControllerSyn/outputWODES/";
+		String inPath = "/Volumes/Miscellaneous/Eclipse Workspace/ControllerSyn/inputWODES/";
+		WODESSynthesize(inPath,outPath);
+		//synthesize(outPath, inPath);
+		//synthesize(outPath, inPath);
 		//test_synthesise_phase(inPath, outPath);
 		//	test_synthesise_phase2();
 	}

@@ -577,12 +577,12 @@ public class LTS {
 			this.removalState.add(getStatebyID(str[idx]));
 	}
 
-	public static LTS parseLTS(String filename, String ltsName, String s0, String NA) throws IOException, NoStateExistException
+	public static LTS parseLTS(String filename, String path, String ltsName, String s0, String NA) throws IOException, NoStateExistException
 	{
 		LTS lts = new LTS();
 		lts.ID = ltsName;
 		try {
-			BufferedReader br = new BufferedReader(new FileReader("/Volumes/Miscellaneous/Eclipse Workspace/ControllerSyn/inputs/" + filename + ".txt"));
+			BufferedReader br = new BufferedReader(new FileReader(path + filename + ".txt"));
 			//			BufferedReader br = new BufferedReader(new FileReader("/home/narges/workspace/CS/src/pack/"+filename+".txt"));
 
 			StringBuilder sb = new StringBuilder();

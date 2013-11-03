@@ -1,0 +1,6 @@
+digraph { 
+pa->pb[label="env.del(ch)"];
+pb->pc[label= "end.del(srv1)"];
+pc->pd[label= "env.add(lgr)"];
+pd->pe[label= "env.conn(receiver,lgr)"];
+}

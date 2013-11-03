@@ -1,0 +1,10 @@
+digraph { 
+a3c2d1b0pd3s0->a3c2d1b0pd3s0[label= "X.NOP()"];
+a3c2d1b1pc2s0->a3c2d1b1pc2s0[label= "X.NOP()"];
+a3c2d0b1pb1s0->a3c2d1b1pc2s0[label= "end.del(srv1)"];
+a3c2d1b1pc2s0->a3c2d1b0pd3s0[label= "env.add(lgr)"];
+a3c2d1b0pe4s0->a3c2d1b0pe4s0[label= "X.NOP()"];
+a3c0d0b1pa0s0->a3c2d0b1pb1s0[label= "env.del(ch)"];
+a3c2d1b0pd3s0->a3c2d1b0pe4s0[label= "env.conn(receiver,lgr)"];
+
+}

@@ -197,7 +197,7 @@ public class Synthesizer {
 
 				boolean notBadState = true;
 				for(String event: plantOutEvents)
-					notBadState = notBadState && (controllerOutEvents.contains(event));		
+					notBadState = notBadState && (!controllerOutEvents.contains(event));		
 
 				if(!notBadState)
 					badStates.add(controllerState.s.ID);

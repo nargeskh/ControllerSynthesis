@@ -704,12 +704,12 @@ public class gLTS {
 	}
 
 
-	public static gLTS parsegLTS(String filename, String ltsName, String s0, Graph model) throws IOException
+	public static gLTS parsegLTS(String filename, String path, String ltsName, String s0, Graph model) throws IOException
 	{
 		gLTS glts = new gLTS();
 		glts.ID = ltsName;
 		try {
-			BufferedReader br = new BufferedReader(new FileReader("/Volumes/Miscellaneous/Eclipse Workspace/ControllerSyn/inputs/" + filename + ".txt"));
+			BufferedReader br = new BufferedReader(new FileReader(path + filename + ".txt"));
 			//			BufferedReader br = new BufferedReader(new FileReader("/home/narges/workspace/CS/src/pack/"+filename+".txt"));
 
 			StringBuilder sb = new StringBuilder();
