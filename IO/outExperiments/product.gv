@@ -1,0 +1,73 @@
+digraph { 
+ layout="neato"
+ compound = "true" margin = "0" node [sha=ellipse,fixedsize=true,width=0.9];subgraph clusterpd{
+a4c2d1b0pd3s0[pos="0,0!"];
+a0c2d1b0pd3s0[pos="0,100!"];
+a3c2d1b0pd3s0[pos="0,200!"];
+a1c2d1b0pd3s0[pos="0,300!"];
+a2c2d1b0pd3s0[pos="0,400!"];
+a4c2d1b0pd3s0->a0c2d1b0pd3s0[label= "X.e()"];
+a0c2d1b0pd3s0->a1c2d1b0pd3s0[label= "X.a()"];
+
+}subgraph clusterpe{
+a4c2d1b0pe4s0[pos="150,0!"];
+a1c2d1b0pe4s0[pos="150,100!"];
+a3c2d1b0pe4s0[pos="150,200!"];
+a2c2d1b0pe4s0[pos="150,300!"];
+a0c2d1b0pe4s0[pos="150,400!"];
+a0c2d1b0pe4s0->a1c2d1b0pe4s0[label= "X.a()"];
+a4c2d1b0pe4s0->a0c2d1b0pe4s0[label= "X.e()"];
+a1c2d1b0pe4s0->a4c2d1b0pe4s0[label= "X.b()"];
+
+}subgraph clusterpa{
+a4c0d0b1pa0s0[pos="300,0!"];
+a2c1d0b1pa0s0[pos="300,100!"];
+a3c0d0b1pa0s0[pos="300,200!"];
+a1c0d0b1pa0s0[pos="300,300!"];
+a0c0d0b1pa0s0[pos="300,400!"];
+a3c0d0b1pa0s0->a4c0d0b1pa0s0[label= "X.d()"];
+a0c0d0b1pa0s0->a1c0d0b1pa0s0[label= "X.a()"];
+a1c0d0b1pa0s0->a2c1d0b1pa0s0[label= "X.c1()"];
+a4c0d0b1pa0s0->a0c0d0b1pa0s0[label= "X.e()"];
+a2c1d0b1pa0s0->a3c0d0b1pa0s0[label= "X.c2()"];
+
+}subgraph clusterpb{
+a3c2d0b1pb1s0[pos="450,0!"];
+a2c2d0b1pb1s0[pos="450,100!"];
+a1c2d0b1pb1s0[pos="450,200!"];
+a0c2d0b1pb1s0[pos="450,300!"];
+a4c2d0b1pb1s0[pos="450,400!"];
+a0c2d0b1pb1s0->a1c2d0b1pb1s0[label= "X.a()"];
+a3c2d0b1pb1s0->a4c2d0b1pb1s0[label= "X.d()"];
+a4c2d0b1pb1s0->a0c2d0b1pb1s0[label= "X.e()"];
+
+}subgraph clusterpc{
+a0c2d1b1pc2s0[pos="600,0!"];
+a3c2d1b1pc2s0[pos="600,100!"];
+a4c2d1b1pc2s0[pos="600,200!"];
+a2c2d1b1pc2s0[pos="600,300!"];
+a1c2d1b1pc2s0[pos="600,400!"];
+a0c2d1b1pc2s0->a1c2d1b1pc2s0[label= "X.a()"];
+a4c2d1b1pc2s0->a0c2d1b1pc2s0[label= "X.e()"];
+
+}
+a0c2d1b0pd3@s0->a0c2d1b0pe4@s0[label="env.conn(receiver,lgr)" , style="dashed"]
+a4c2d1b0pd3@s0->a4c2d1b0pe4@s0[label="env.conn(receiver,lgr)" , style="dashed"]
+a3c2d1b0pd3@s0->a3c2d1b0pe4@s0[label="env.conn(receiver,lgr)" , style="dashed"]
+a1c2d0b1pb1@s0->a1c2d1b1pc2@s0[label="end.del(srv1)" , style="dashed"]
+a4c0d0b1pa0@s0->a4c2d0b1pb1@s0[label="env.del(ch)" , style="dashed"]
+a2c2d1b1pc2@s0->a2c2d1b0pd3@s0[label="env.add(lgr)" , style="dashed"]
+a1c2d1b1pc2@s0->a1c2d1b0pd3@s0[label="env.add(lgr)" , style="dashed"]
+a3c2d1b1pc2@s0->a3c2d1b0pd3@s0[label="env.add(lgr)" , style="dashed"]
+a3c0d0b1pa0@s0->a3c2d0b1pb1@s0[label="env.del(ch)" , style="dashed"]
+a4c2d1b1pc2@s0->a4c2d1b0pd3@s0[label="env.add(lgr)" , style="dashed"]
+a1c2d1b0pd3@s0->a1c2d1b0pe4@s0[label="env.conn(receiver,lgr)" , style="dashed"]
+a2c1d0b1pa0@s0->a2c2d0b1pb1@s0[label="env.del(ch)" , style="dashed"]
+a2c2d0b1pb1@s0->a2c2d1b1pc2@s0[label="end.del(srv1)" , style="dashed"]
+a4c2d0b1pb1@s0->a4c2d1b1pc2@s0[label="end.del(srv1)" , style="dashed"]
+a0c0d0b1pa0@s0->a0c2d0b1pb1@s0[label="env.del(ch)" , style="dashed"]
+a2c2d1b0pd3@s0->a2c2d1b0pe4@s0[label="env.conn(receiver,lgr)" , style="dashed"]
+a1c0d0b1pa0@s0->a1c2d0b1pb1@s0[label="env.del(ch)" , style="dashed"]
+a3c2d0b1pb1@s0->a3c2d1b1pc2@s0[label="end.del(srv1)" , style="dashed"]
+a0c2d1b1pc2@s0->a0c2d1b0pd3@s0[label="env.add(lgr)" , style="dashed"]
+a0c2d0b1pb1@s0->a0c2d1b1pc2@s0[label="end.del(srv1)" , style="dashed"]}

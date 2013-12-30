@@ -316,7 +316,7 @@ public class MainCS {
 
 		gLTS gts = new gLTS();
 		gts = gts.applyReconfiguration(ltslist, plan,false);
-		out.println("The system model is:\n" + gts.draw());
+		out.println("The system model is:\n" + gts.draw(0,75));
 		gts.removeStateSplitter();
 		
 		List<String> uncontrolledEvents = new ArrayList<String>();
@@ -331,7 +331,7 @@ public class MainCS {
 		Synthesizer synth = new Synthesizer();
 		gLTS adaptor = synth.synthesize(gts, spec,plan, uncontrolledEvents,true);
 
-		putIntoFile( adaptor.draw(), outPath, "adaptor");
+		putIntoFile( adaptor.draw(0,75), outPath, "adaptor");
 	}
 
 	private static void synthesize(String outPath, String inPath) throws IOException, NoStateExistException {
@@ -341,7 +341,7 @@ public class MainCS {
 		ArrayList<LTS>  ltslist = buildComponentModel(inPath, outPath);
 		Graph model = getHeavyLoadStructure(outPath);
 		gLTS plan = gLTS.parsegLTS("plan",  inPath, "plan", "pa", model);
-		out.println("The reconfiguration plan:\n" + plan.draw());
+		out.println("The reconfiguration plan:\n" + plan.draw(0,75));
 
 		gLTS gts = new gLTS();
 		gts = gts.applyReconfiguration(ltslist, plan,false);
@@ -377,12 +377,12 @@ public class MainCS {
 		ArrayList<LTS>  ltslist = buildWODESComponentModel(inPath, outPath);
 		Graph model = getWODESPaperStructure();
 		gLTS plan = gLTS.parsegLTS("plan", inPath, "plan", "pa", model);
-		out.println("The reconfiguration plan:\n" + plan.draw());
+		out.println("The reconfiguration plan:\n" + plan.draw(0,75));
 
 		gLTS gts = new gLTS();
 		gts = gts.applyReconfiguration(ltslist, plan,false);
 		gts.removeStateSplitter();
-		putIntoFile( gts.draw(), outPath, "model");
+		putIntoFile( gts.draw(0,75), outPath, "model");
 		printEachConfigAdaptor(gts, plan, outPath,"model");
 
 //		GraphAutomata spec = GraphAutomata.parseGraphAutomata("spec", "s0", "s0",inPath);
@@ -398,7 +398,7 @@ public class MainCS {
 		gLTS adaptor = synth.synthesize(gts, spec, plan, uncontrolledEvents,false);
 
 		adaptor = synth.removeCycles(adaptor, outPath);
-		putIntoFile( adaptor.draw(), outPath, "adaptor");
+		putIntoFile( adaptor.draw(0,75), outPath, "adaptor");
 		printEachConfigAdaptor(adaptor, plan, outPath,"adaptor");
 	}
 
@@ -406,10 +406,10 @@ public class MainCS {
 	private static void printEachConfigAdaptor(gLTS adaptor, gLTS plan, String path, String fileName) {
 		for(gState s:plan.states.values())
 		{
-			gLTS configAdaptor = adaptor.getGLTSofConfig(s.s.ID);
+			gLTS configAdaptor = adaptor.getGLTSofConfig(s.s.ID,"");
 			out.println("The configuration controller in " + s.s.ID + 
 					":" + Integer.toString(configAdaptor.states.size()));
-			putIntoFile( configAdaptor.draw(), path , "adaptor"+s.s.ID);
+			putIntoFile( configAdaptor.draw(0,75), path , fileName+s.s.ID);
 		}
 
 	}

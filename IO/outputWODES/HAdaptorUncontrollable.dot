@@ -1,0 +1,30 @@
+digraph { 
+layout="neato"
+compound = "true";
+margin = "0"
+node [sha=ellipse,fixedsize=true,width=1];
+
+subgraph clusterA{
+a3c0d0b10[label="a3c0d0b10",pos="0,0!",fontname="arial"];
+}
+
+subgraph clusterB{
+a3c2d0b11[label="a3c2d0b11",pos="125,0!",fontname="arial"];
+}
+
+subgraph clusterC{
+a3c2d1b12[label="a3c2d1b12",pos="250,0!",fontname="arial"];
+}
+
+subgraph clusterD{
+a3c2d1b03[label="a3c2d1b03",pos="375,0!",fontname="arial"];
+}
+subgraph clusterE{
+a3c2d1b04[label="a3c2d1b04",pos="500,0!",fontname="arial"];
+}
+a3c2d0b11->a3c2d1b12[label= "del(D)",style="dashed"];
+a3c2d1b12->a3c2d1b03[label= "add(B)",style="dashed"];
+a3c0d0b10->a3c2d0b11[label= "del(C)",style="dashed"];
+a3c2d1b03->a3c2d1b04[label= "conn(A,B)",style="dashed"];
+}
+}

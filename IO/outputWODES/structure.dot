@@ -1,0 +1,33 @@
+digraph { 
+layout="neato";
+compound = "true";
+margin = "0";
+node [shape=square,fixedsize=true,width=0.3];
+subgraph clusterA{
+A[pos="0,20!"];
+C[pos="50,50!"];
+D[pos="50,0!"];
+A->C;
+A->D;
+}
+subgraph clusterB{
+A1[label="A",pos="150,20!"];
+D1[label="D",pos="200,0!"];
+A1->D1;
+}
+
+subgraph clusterC{
+A2[label="A",pos="280,20!"];
+}
+
+subgraph clusterD{
+A3[label="A",pos="420,20!"];
+B3[label="B",pos="470,0!"];
+}
+
+subgraph clusterE{
+A4[label="A",pos="550,20!"];
+B4[label="B",pos="600,0!"];
+A4->B4;
+}
+}

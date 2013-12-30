@@ -1,0 +1,4 @@
+digraph{
+d0->d0[label= "X.d()?"];
+d1->d1[label= "X.NOP()"];
+}

@@ -1,0 +1,6 @@
+digraph G{
+  s0 -> s0 [label="!X.a[]"];
+  s0 -> s1 [label="X.a[]"];
+  s1 -> s1 [label="!X.e[]"];
+  s1 -> s0 [label="X.e[]"]
+}

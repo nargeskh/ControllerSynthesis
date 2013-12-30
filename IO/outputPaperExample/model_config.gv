@@ -1,0 +1,79 @@
+digraph { 
+ layout="neato"
+ compound = "true" margin = "0" node [sha=ellipse,fixedsize=true,width=0.9];subgraph clusterpd{
+a0c3d1e0b0pd3[pos="0,0!"];
+a4c3d1e0b0pd3[pos="0,100!"];
+a2c3d1e0b0pd3[pos="0,200!"];
+a1c3d1e0b0pd3[pos="0,300!"];
+a4c3d1e0b0pd3->a0c3d1e0b0pd3[label= "X.e()"];
+a0c3d1e0b0pd3->a1c3d1e0b0pd3[label= "X.a()"];
+
+}subgraph clusterpa{
+a2c1d0e0b2pa0[pos="150,0!"];
+a1c1d0e0b2pa0[pos="150,100!"];
+a1c0d0e0b2pa0[pos="150,200!"];
+a4c2d0e0b2pa0[pos="150,300!"];
+a0c1d0e0b2pa0[pos="150,400!"];
+a4c1d0e0b2pa0[pos="150,500!"];
+a4c0d0e0b2pa0[pos="150,600!"];
+a2c2d0e0b2pa0[pos="150,700!"];
+a1c2d0e0b2pa0[pos="150,800!"];
+a0c0d0e0b2pa0[pos="150,900!"];
+a0c2d0e0b2pa0[pos="150,1000!"];
+a4c1d0e0b2pa0->a0c1d0e0b2pa0[label= "X.e()"];
+a1c0d0e0b2pa0->a4c0d0e0b2pa0[label= "X.d()"];
+a1c1d0e0b2pa0->a1c2d0e0b2pa0[label= "X.d()"];
+a1c1d0e0b2pa0->a4c1d0e0b2pa0[label= "X.d()"];
+a2c1d0e0b2pa0->a4c1d0e0b2pa0[label= "X.d()"];
+a0c0d0e0b2pa0->a1c0d0e0b2pa0[label= "X.a()"];
+a4c0d0e0b2pa0->a0c0d0e0b2pa0[label= "X.e()"];
+a0c1d0e0b2pa0->a1c1d0e0b2pa0[label= "X.a()"];
+a1c0d0e0b2pa0->a2c1d0e0b2pa0[label= "X.c1()"];
+a4c1d0e0b2pa0->a4c2d0e0b2pa0[label= "X.d()"];
+a2c1d0e0b2pa0->a2c2d0e0b2pa0[label= "X.d()"];
+a1c2d0e0b2pa0->a4c2d0e0b2pa0[label= "X.d()"];
+a0c1d0e0b2pa0->a0c2d0e0b2pa0[label= "X.d()"];
+a4c2d0e0b2pa0->a0c2d0e0b2pa0[label= "X.e()"];
+a0c2d0e0b2pa0->a1c2d0e0b2pa0[label= "X.a()"];
+a2c2d0e0b2pa0->a4c2d0e0b2pa0[label= "X.d()"];
+
+}subgraph clusterpb{
+a1c3d0e0b2pb1[pos="300,0!"];
+a4c3d0e0b2pb1[pos="300,100!"];
+a0c3d0e0b2pb1[pos="300,200!"];
+a2c3d0e0b2pb1[pos="300,300!"];
+a0c3d0e0b2pb1->a1c3d0e0b2pb1[label= "X.a()"];
+a2c3d0e0b2pb1->a4c3d0e0b2pb1[label= "X.d()"];
+a1c3d0e0b2pb1->a4c3d0e0b2pb1[label= "X.d()"];
+a4c3d0e0b2pb1->a0c3d0e0b2pb1[label= "X.e()"];
+
+}subgraph clusterpc{
+a2c3d0e0b0pc2[pos="450,0!"];
+a1c3d0e0b0pc2[pos="450,100!"];
+a4c3d0e0b0pc2[pos="450,200!"];
+a0c3d0e0b0pc2[pos="450,300!"];
+a4c3d0e0b0pc2->a0c3d0e0b0pc2[label= "X.e()"];
+a2c3d0e0b0pc2->a4c3d0e0b0pc2[label= "X.d()"];
+a0c3d0e0b0pc2->a1c3d0e0b0pc2[label= "X.a()"];
+a1c3d0e0b0pc2->a4c3d0e0b0pc2[label= "X.d()"];
+
+}
+a0c2d0e0b2pa0->a0c3d0e0b2pb1[label="env.del(compC)" , style="dashed"]
+a0c1d0e0b2pa0->a0c3d0e0b2pb1[label="env.del(compC)" , style="dashed"]
+a4c0d0e0b2pa0->a4c3d0e0b2pb1[label="env.del(compC)" , style="dashed"]
+a1c1d0e0b2pa0->a1c3d0e0b2pb1[label="env.del(compC)" , style="dashed"]
+a0c3d0e0b2pb1->a0c3d0e0b0pc2[label="end.add(compB)" , style="dashed"]
+a4c2d0e0b2pa0->a4c3d0e0b2pb1[label="env.del(compC)" , style="dashed"]
+a4c3d0e0b0pc2->a4c3d1e0b0pd3[label="env.del(compD)" , style="dashed"]
+a4c1d0e0b2pa0->a4c3d0e0b2pb1[label="env.del(compC)" , style="dashed"]
+a1c3d0e0b2pb1->a1c3d0e0b0pc2[label="end.add(compB)" , style="dashed"]
+a2c3d0e0b2pb1->a2c3d0e0b0pc2[label="end.add(compB)" , style="dashed"]
+a2c2d0e0b2pa0->a2c3d0e0b2pb1[label="env.del(compC)" , style="dashed"]
+a1c2d0e0b2pa0->a1c3d0e0b2pb1[label="env.del(compC)" , style="dashed"]
+a0c3d0e0b0pc2->a0c3d1e0b0pd3[label="env.del(compD)" , style="dashed"]
+a2c1d0e0b2pa0->a2c3d0e0b2pb1[label="env.del(compC)" , style="dashed"]
+a4c3d0e0b2pb1->a4c3d0e0b0pc2[label="end.add(compB)" , style="dashed"]
+a1c3d0e0b0pc2->a1c3d1e0b0pd3[label="env.del(compD)" , style="dashed"]
+a2c3d0e0b0pc2->a2c3d1e0b0pd3[label="env.del(compD)" , style="dashed"]
+a0c0d0e0b2pa0->a0c3d0e0b2pb1[label="env.del(compC)" , style="dashed"]
+a1c0d0e0b2pa0->a1c3d0e0b2pb1[label="env.del(compC)" , style="dashed"]}

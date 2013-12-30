@@ -1,0 +1,9 @@
+digraph { 
+a0->a1[label= "X.a()"];
+a1->a4[label= "X.d()!"];
+a1->a2[label= "X.c1()!"];
+a2->a3[label= "X.c2()!"];
+a2->a4[label= "X.d()!"];
+a3->a4[label= "X.d()!"];
+a4->a0[label= "X.e()"];
+}
