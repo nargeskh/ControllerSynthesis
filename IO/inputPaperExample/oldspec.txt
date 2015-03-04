@@ -1,0 +1,17 @@
+digraph G{
+  s0 -> s0 [label="(!X.a[]) && ((1:compA$2:compC|1=>2:compAcompC) ||
+                                (1:compA$5:compB|1=>5:compAcompB)||
+                                (1:compA$3:compD|1=>3:compAcompD))"];
+  s0 -> s1 [label="X.a[] && ((1:compA$2:compC|1=>2:compAcompC) ||
+                             (1:compA$5:compB|1=>5:compAcompB)||
+                             (1:compA$3:compD|1=>3:compAcompD))"];
+  s1 -> s1 [label="(X.a[]  &&  X.d[] && ((1:compA$2:compC|1=>2:compAcompC) ||
+                                         (1:compA$5:compB|1=>5:compAcompB)||
+                                         (1:compA$3:compD|1=>3:compAcompD))) ||
+  	               (!X.a[] && !X.d[] && ((1:compA$2:compC|1=>2:compAcompC) ||
+                                         (1:compA$5:compB|1=>5:compAcompB) ||
+                                         (1:compA$3:compD|1=>3:compAcompD)))"];
+  s1 -> s0 [label="!X.a[]&&X.d[]&&((1:compA$2:compC|1=>2:compAcompC) ||
+                                   (1:compA$5:compB|1=>5:compAcompB)||
+                                   (1:compA$3:compD|1=>3:compAcompD))"]
+}

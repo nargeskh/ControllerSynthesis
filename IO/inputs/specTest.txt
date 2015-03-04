@@ -1,3 +1,0 @@
-digraph { 
-s0->s0[label= "!ana.req[x]"];
-}

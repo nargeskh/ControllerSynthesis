@@ -15,6 +15,8 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 
 public class ExampleMain {
@@ -22,7 +24,7 @@ public class ExampleMain {
 	public static void putIntoFile(String content, String path, String fileName) {
 		try {
 			BufferedWriter writer = new BufferedWriter(new FileWriter(new File(
-					path + fileName + ".gv")));
+					path + fileName )));
 			writer.write(content);
 			writer.close();
 			// String command = "dot -Tjpg -o " + fileName + ".jpg " + fileName
@@ -52,10 +54,10 @@ public class ExampleMain {
 		compE.addInitRemovalStates("e0", "e0");
 
 		out.flush();
-		putIntoFile(compA.draw(), outPath, "compA");
-		putIntoFile(compB.draw(), outPath, "compB");
-		putIntoFile(compC.draw(), outPath, "compC");
-		putIntoFile(compD.draw(), outPath, "compD");
+		putIntoFile(compA.draw(), outPath, "compA.gv");
+		putIntoFile(compB.draw(), outPath, "compB.gv");
+		putIntoFile(compC.draw(), outPath, "compC.gv");
+		putIntoFile(compD.draw(), outPath, "compD.gv");
 
 		ArrayList<LTS> ltslist = new ArrayList<LTS>();
 		// the order of adding LTSs to the model should be same as their ID in
@@ -93,10 +95,12 @@ public class ExampleMain {
 		gLTS gts = new gLTS();
 		gts = gts.applyReconfiguration(ltslist, plan, false);
 		gts.removeStateSplitter();
-		// putIntoFile(gts.draw(0,75), outPath, "model");
+				
+		
+		putIntoFile(gts.filter_gml_draw(0,75, "NOP","e1"), outPath, "model.gml");
 
-		putIntoFile(gts.printEachConfigAdaptor(plan, "e1", 100), outPath,
-				"model_config");
+		//putIntoFile(gts.printEachConfigAdaptor(plan, "e1", 100), outPath,
+		//		"model_config");
 
 		// GraphAutomata spec = GraphAutomata.parseGraphAutomata("spec", "s0",
 		// "s0",inPath);
@@ -107,18 +111,19 @@ public class ExampleMain {
 
 		List<String> uncontrolledEvents = new ArrayList<String>();
 		//uncontrolledEvents.add("X.a()");
-		uncontrolledEvents.add("X.e()");
+		//uncontrolledEvents.add("X.d()");
+		uncontrolledEvents.add("X.c1()");
 
 		Synthesizer synth = new Synthesizer();
 		gLTS adaptor = synth.synthesize(gts, spec, plan, uncontrolledEvents,
-				false, outPath);
+				true, outPath);
 
-		adaptor = synth.removeCycles(adaptor, outPath);
+//		adaptor = synth.removeCycles(adaptor, outPath);
 		putIntoFile(adaptor.printEachConfigAdaptor(plan, "e1", 100), outPath,
 				"adaptor_config");
-		// putIntoFile(adaptor.draw(0,75), outPath, "adaptor");
-		// printEachConfigAdaptor(adaptor, plan, outPath, "adaptor");
-	}
+		putIntoFile(adaptor.filter_gml_draw(0,75, "NOP","e1"), outPath, "adaptor_config.gml");
+		putIntoFile(adaptor.filter_draw(0,75, "NOP","e1"), outPath, "adaptor.gv");
+			}
 
 	private static void printEachConfigAdaptor(gLTS adaptor, gLTS plan,
 			String path, String fileName) {

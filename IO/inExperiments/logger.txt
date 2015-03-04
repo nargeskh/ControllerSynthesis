@@ -1,4 +1,3 @@
 digraph{
 b0->b0[label= "X.b()?"];
-b1->b1[label= "X.NOP()"];
 }

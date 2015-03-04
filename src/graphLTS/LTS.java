@@ -48,6 +48,7 @@ public class LTS {
 	public ArrayList<Transition> trans = new ArrayList<Transition>();
 
 	public String ID;
+	//private ArrayList<State> finals = new ArrayList<State>();
 
 	public ArrayList<State> getStates() {
 		return states;
@@ -239,6 +240,13 @@ public class LTS {
 			res.trans.add(t1); 
 		}
 		res.ID = this.ID;
+
+		if(res.NA.ID==null)
+		{
+			State s = new State(NA.ID);
+			res.NA = s;
+			res.states.add(s);
+		}
 		return res;				
 	}
 
@@ -295,6 +303,7 @@ public class LTS {
 					if (e.type == ACTIVE.INTERNAL) {
 						//Event matched = new Event();
 						//		matched = e;
+						//out.println(currs[0].ID + currs[1].ID + currs[2].ID + currs[3].ID);
 						sid = generateStateID(curtrans,getOwnerID(curtrans.owner, LTSs), null,0,currs);							
 						//newtrans = new transition(e, curstate, newstate,"prod");
 						if(cOn) 
@@ -501,11 +510,11 @@ public class LTS {
 		return sID.substring(0,sID.length()-1);
 	}
 
-	public LTS buildInactiveLTS() {
+	public LTS buildInactiveLTS(String NAId) {
 		// TODO Auto-generated method stub
 		LTS res = new LTS();
 
-		State src = new State(NA.ID);
+		State src = new State(NAId);
 		res.NA = src;
 		res.s0 = src;
 		res.states.add(src);
@@ -651,6 +660,11 @@ public class LTS {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+
+		if(lts.NA.ID == null)
+			lts.NA.ID = NA;
+		
+	
 		return lts; 
 	}
 

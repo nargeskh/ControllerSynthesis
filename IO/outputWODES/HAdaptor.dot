@@ -13,7 +13,7 @@ a0c2d0b11[label="a0c2d0b11",pos="200,150!",fontname="arial"];
 a4c2d0b11[label="a4c2d0b11",pos="200,225!",fontname="arial"];
 a3c2d0b11[label="a3c2d0b11",pos="200,300!",fontname="arial"];
 a3c2d0b11->a4c2d0b11[label= "d"];
-a4c2d0b11->a0c2d0b11[label= "e"];
+a4c2d0b11->a0c2d0b11[label= "e'"];
 }
 
 subgraph clusterC{
@@ -27,7 +27,7 @@ a1c2d1b03[label="a1c2d1b03",pos="550,75!",fontname="arial"];
 a0c2d1b03[label="a0c2d1b03",pos="550,150!",fontname="arial"];
 a4c2d1b03[label="a4c2d1b03",pos="550,225!",fontname="arial"];
 a3c2d1b03[label="a3c2d1b03",pos="550,300!",fontname="arial"];
-a0c2d1b03->a1c2d1b03[label= "a"];
+a0c2d1b03->a1c2d1b03[label= "a'"];
 }
 subgraph clusterE{
 a1c2d1b04[label="a1c2d1b04",pos="700,75!",fontname="arial"];
@@ -35,7 +35,7 @@ a0c2d1b04[label="a0c2d1b04",pos="750,150!",fontname="arial"];
 a4c2d1b04[label="a4c2d1b04",pos="700,225!",fontname="arial"];
 a3c2d1b04[label="a3c2d1b04",pos="700,300!",fontname="arial"];
 a1c2d1b04->a4c2d1b04[label= "b"];
-a4c2d1b04->a0c2d1b04[label= "e"];
+a4c2d1b04->a0c2d1b04[label= "e'"];
 }
 
 a3c2d0b11->a3c2d1b12[label= "del(D)",style="dashed"];

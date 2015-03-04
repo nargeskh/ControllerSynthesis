@@ -95,13 +95,14 @@ public class ExperimentsMain {
 
 		//this the example with no deadlock 
 		GraphAutomata spec = GraphAutomata.parseGraphAutomata("NoDeadlockSpec", "s0", "s0",inPath);
+		//GraphAutomata spec = GraphAutomata.parseGraphAutomata("spec", "s1", "s1@s2",inPath);
 
 		List<String> uncontrolledEvents = new ArrayList<String>();
 		//uncontrolledEvents.add("X.a()");
 		//uncontrolledEvents.add("X.e()");
 
 		Synthesizer synth = new Synthesizer();
-		gLTS adaptor = synth.synthesize(gts, spec, plan, uncontrolledEvents,false,outPath);
+		gLTS adaptor = synth.synthesize(gts, spec, plan, uncontrolledEvents,true,outPath);
 
 		//adaptor = synth.removeCycles(adaptor, outPath);
 		putIntoFile( adaptor.draw(100,100), outPath, "adaptor");
@@ -112,9 +113,12 @@ public class ExperimentsMain {
 	private static void printEachConfigAdaptor(gLTS adaptor, gLTS plan, String path, String fileName) {
 		for(gState s:plan.states.values())
 		{
-			gLTS configAdaptor = adaptor.getGLTSofConfig(s.s.ID, "");
+			gLTS configAdaptor = adaptor.getGLTSofConfig(s.s.ID, "e1");
 			out.println("The configuration controller in " + s.s.ID + 
-					":" + Integer.toString(configAdaptor.states.size()));
+					" has the size:" + Integer.toString(configAdaptor.states.size()));
+			
+			out.println("The initial structure of system is:\n" + adaptor.s0.g.toDot());
+
 			putIntoFile( configAdaptor.draw(100,100), path , "adaptor"+s.s.ID);
 		}
 

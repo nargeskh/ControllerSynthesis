@@ -9,10 +9,10 @@ a1c0d0b10[label="a1c0d0b10",pos="0,75!",fontname="arial"];
 a0c0d0b10[label="a0c0d0b10",pos="0,150!",fontname="arial"];
 a4c0d0b10[label="a4c0d0b10",pos="0,225!",fontname="arial"];
 a3c0d0b10[label="a3c0d0b10",pos="75,300!",fontname="arial"];
-a4c0d0b10->a0c0d0b10[label= "e"];
+a4c0d0b10->a0c0d0b10[label= "e'"];
 a2c1d0b10->a3c0d0b10[label= "c2"];
 a3c0d0b10->a4c0d0b10[label= "d"];
-a0c0d0b10->a1c0d0b10[label= "a"];
+a0c0d0b10->a1c0d0b10[label= "a'"];
 a1c0d0b10->a2c1d0b10[label= "c1"];
 }
 
@@ -22,8 +22,8 @@ a1c2d0b11[label="a1c2d0b11",pos="200,75!",fontname="arial"];
 a0c2d0b11[label="a0c2d0b11",pos="200,150!",fontname="arial"];
 a4c2d0b11[label="a4c2d0b11",pos="200,225!",fontname="arial"];
 a3c2d0b11[label="a3c2d0b11",pos="200,300!",fontname="arial"];
-a4c2d0b11->a0c2d0b11[label= "e"];
-a0c2d0b11->a1c2d0b11[label= "a"];
+a4c2d0b11->a0c2d0b11[label= "e'"];
+a0c2d0b11->a1c2d0b11[label= "a'"];
 a3c2d0b11->a4c2d0b11[label= "d"];
 }
 
@@ -33,8 +33,8 @@ a4c2d1b12[label="a4c2d1b12",pos="350,225!",fontname="arial"];
 a0c2d1b12[label="a0c2d1b12",pos="350,150!",fontname="arial"];
 a1c2d1b12[label="a1c2d1b12",pos="350,75!",fontname="arial"];
 a3c2d1b12[label="a3c2d1b12",pos="350,300!",fontname="arial"];
-a0c2d1b12->a1c2d1b12[label= "a"];
-a4c2d1b12->a0c2d1b12[label= "e"];
+a0c2d1b12->a1c2d1b12[label= "a'"];
+a4c2d1b12->a0c2d1b12[label= "e'"];
 }
 
 subgraph clusterD{
@@ -43,8 +43,8 @@ a1c2d1b03[label="a1c2d1b03",pos="550,75!",fontname="arial"];
 a0c2d1b03[label="a0c2d1b03",pos="550,150!",fontname="arial"];
 a4c2d1b03[label="a4c2d1b03",pos="550,225!",fontname="arial"];
 a3c2d1b03[label="a3c2d1b03",pos="550,300!",fontname="arial"];
-a0c2d1b03->a1c2d1b03[label= "a"];
-a4c2d1b03->a0c2d1b03[label= "e"];
+a0c2d1b03->a1c2d1b03[label= "a'"];
+a4c2d1b03->a0c2d1b03[label= "e'"];
 }
 subgraph clusterE{
 a2c2d1b04[label="a2c2d1b04",pos="700,0!",fontname="arial"];
@@ -52,9 +52,9 @@ a1c2d1b04[label="a1c2d1b04",pos="700,75!",fontname="arial"];
 a0c2d1b04[label="a0c2d1b04",pos="750,150!",fontname="arial"];
 a4c2d1b04[label="a4c2d1b04",pos="700,225!",fontname="arial"];
 a3c2d1b04[label="a3c2d1b04",pos="700,300!",fontname="arial"];
-a0c2d1b04->a1c2d1b04[label= "a"];
+a0c2d1b04->a1c2d1b04[label= "a'"];
 a1c2d1b04->a4c2d1b04[label= "b"];
-a4c2d1b04->a0c2d1b04[label= "e"];
+a4c2d1b04->a0c2d1b04[label= "e'"];
 }
 a1c0d0b10->a1c2d0b11[label= "del(C)",style="dashed"];
 a0c2d1b03->a0c2d1b04[label= "conn(A,B)",style="dashed"];
@@ -89,13 +89,13 @@ node [sha=ellipse,fixedsize=true,width=0.9];
 rankdir="LR"
 subgraph clusterD{
 a3c2d1b0D; a2c2d1b0D;
-a0c2d1b0D->a1c2d1b0D[label= "a"];
+a0c2d1b0D->a1c2d1b0D[label= "a'"];
 a4c2d1b0D->a0c2d1b0D[label= "e"];
 }
 subgraph clusterA{
 a3c0d0b1A->a4c0d0b1A[label= "d"];
 a4c0d0b1A->a0c0d0b1A[label= "e"];
-a0c0d0b1A->a1c0d0b1A[label= "a"];
+a0c0d0b1A->a1c0d0b1A[label= "a'"];
 a2c1d0b1A->a3c0d0b1A[label= "c2"];
 a1c0d0b1A->a2c1d0b1A[label= "c1"];
 }
@@ -103,18 +103,18 @@ subgraph clusterC{
 a3c2d1b1C;
 a2c2d1b1C
 a4c2d1b1C->a0c2d1b1C[label= "e"];
-a0c2d1b1C->a1c2d1b1C[label= "a"];
+a0c2d1b1C->a1c2d1b1C[label= "a'"];
 }
 subgraph clusterB{
 a2c2d0b1B;
-a0c2d0b1B->a1c2d0b1B[label= "a"];
+a0c2d0b1B->a1c2d0b1B[label= "a'"];
 a4c2d0b1B->a0c2d0b1B[label= "e"];
 a3c2d0b1B->a4c2d0b1B[label= "d"];
 }
 subgraph clusterE{
 a3c2d1b0E; a2c2d1b0E;
 a4c2d1b0E->a0c2d1b0E[label= "e"];
-a0c2d1b0E->a1c2d1b0E[label= "a"];
+a0c2d1b0E->a1c2d1b0E[label= "a'"];
 a1c2d1b0E->a4c2d1b0E[label= "b"];
 }
 a0c2d1b1C->a0c2d1b0D[label="add(B)",style="dashed"]

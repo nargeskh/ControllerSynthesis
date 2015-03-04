@@ -1,0 +1,15 @@
+digraph { 
+pa->pb[label="env.del(ch)"];
+pa->pc[label= "end.del(srv2)"];
+pb->pd[label="env.del(srv2)"];
+pc->pd[label= "env.del(ch)"];
+pd->pe[label= "env.add(lgr)"];
+pe->pf[label= "env.conn(receiver,lgr)"];
+pf->pm[label= "env.conn(agg,lgr)"];
+pm->pn[label= "env.conn(disp,srv3)"];
+pn->po[label= "env.conn(srv3,DBA)"];
+po->pp[label= "env.conn(srv3,agg)"];
+pn->pq[label= "env.conn(srv3,agg)"];
+pq->pr[label= "env.conn(srv3,DBA)"]
+}
+

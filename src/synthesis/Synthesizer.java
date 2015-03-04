@@ -19,31 +19,46 @@ public class Synthesizer {
 
 	public gLTS synthesize(gLTS plant, GraphAutomata spec, gLTS plan,
 			List<String> uncontrolledEvents, boolean drawing, String outPath) {
+		out.println("\n************************\nNo. of States/Transitions/Finals of plant:"
+				+ Integer.toString(plant.states.size()) + "/"
+				+ Integer.toString(plant.trans.size()) + "/"
+				+ Integer.toString(plant.finals.size()));
+
+		String draw = "";
 		gLTS controller = new gLTS();
 		try {
 			controller = product(plant, spec);
-			out.println("\nThe Product of SPEC and PLANT is :"
-					+ (drawing ? controller.draw(0, 75) : ""));
-			out.println("No. of States/Transitions of Product:"
+			/*		out.println("\n************************\nNo. of States/Transitions/Finals of Product:"
+					+ Integer.toString(controller.states.size()) + "/"
+					+ Integer.toString(controller.trans.size())+ "/"
+					+ Integer.toString(plant.finals.size()));
+
+			ExampleMain.putIntoFile(controller.connectingNodesDraw(),
+					outPath, "connectings.gv");
+
+			if (drawing)
+			{
+				draw = controller.filter_gml_draw(0,75, "NOP","e1");
+				out.println(drawing ? "\nThe Product of SPEC and PLANT is :"
+						+ draw: "");
+				ExampleMain.putIntoFile(draw,
+						outPath, "product.gml");
+			}
+*/
+			controller = removeBadStates(plant, controller, uncontrolledEvents, false);
+			/*out.println("\n************************\nNo. of States/Transitions after bad state removal:"
 					+ Integer.toString(controller.states.size()) + "/"
 					+ Integer.toString(controller.trans.size()));
-			ExampleMain.putIntoFile(
-					controller.printEachConfigAdaptor(plan, "e1", 100),
-					outPath, "product");
-
-			controller = removeBadStates(plant, controller, uncontrolledEvents);
 			out.println("\nController after removing bad states:"
 					+ (drawing ? controller.draw(0, 75) : ""));
-			out.println("No. of States/Transitions of Product:"
-					+ Integer.toString(controller.states.size()) + "/"
-					+ Integer.toString(controller.trans.size()));
-
+*/
 			controller = this.removeCounreachableStates(controller);
-			out.println("\nController after removing un-coaccesible states:"
-					+ (drawing ? controller.draw(0, 75) : ""));
-			out.println("No States/Transitions of final adaptor:"
+			out.println("\n************************\nNo States/Transitions/Finals of final adaptor:"
 					+ Integer.toString(controller.states.size()) + "/"
+					+ Integer.toString(controller.trans.size())+ "/"
 					+ Integer.toString(controller.trans.size()));
+			//out.println("\nController after removing un-coaccesible states:"
+			//		+ (drawing ? controller.draw(0, 75) : ""));
 
 		} catch (NoStateExistException e) {
 			e.printStackTrace();
@@ -78,9 +93,10 @@ public class Synthesizer {
 				// get the current state of plant and the spec
 				gState pstate = plant.getStatebyID(sIDs[0]);
 				State sstate = spec.getStatebyID(sIDs[1]);
+				//String curBuchiStateID = sIDs[2];
 
 				// get the outgoing transition of current state of plant
-				ArrayList<gTransition> pouttrans = plant.getOutTransof(pstate);
+				ArrayList<gTransition> pouttrans = plant.getOutTransof(pstate.s.ID);
 
 				Iterator<gTransition> iter = pouttrans.iterator();
 				while (iter.hasNext()) {
@@ -89,12 +105,29 @@ public class Synthesizer {
 					// find all the satisfying transitions from spec
 					ArrayList<gExptransition> satTransList = spec
 							.findSatisfiableTrans(ptrans, sstate);
-					// out.println("B" + Integer.toString((counter++)));
+					/*	out.println("The number of outgoing and satisfied ones are :" + 
+							Integer.toString(pouttrans.size()) +
+							"     " + Integer.toString(satTransList.size()));
+					 */	
 
 					Iterator<gExptransition> itera = satTransList.iterator();
 					while (itera.hasNext()) {
 						// out.println("C" + Integer.toString((counter++)));
 						gExptransition strans = itera.next();
+						String trgBuchiStateID;
+
+						//trgBuchiStateID = curBuchiStateID;
+
+						/*if (spec.isfinalState(sstate.ID)) 
+							if(plant.isfinalState(pstate.s.ID))
+								trgBuchiStateID = "2";
+							else
+								trgBuchiStateID = "1";
+						if ( plant.isfinalState(pstate.s.ID)) 
+							trgBuchiStateID = "2";
+						if (curBuchiStateID.contains("2"))
+							trgBuchiStateID = "0";
+*/
 						String sid = ptrans.trg.s.ID + "@" + strans.trg.ID;
 						gState trgstate = new gState(new State(sid),
 								ptrans.trg.g);
@@ -116,67 +149,70 @@ public class Synthesizer {
 						// if both plant and system model are in final states,
 						// then this state is final
 						if (spec.isfinalState(strans.trg.ID)
-								&& plant.finals.get(ptrans.trg.s.ID) != null)
+							&& plant.finals.get(ptrans.trg.s.ID) != null)
 							adaptor.finals.put(trgstate.s.ID, trgstate);
 					}
 				}
 				visited.add(curstate.s.ID);
 			}
 		}
+		out.println("Number of visited states are:" + 
+				Integer.toString(visited.size()));
 		return adaptor;
 	}
 
-	private gLTS removeCounreachableStates(gLTS controller) {
+	// we first find the initial reachable state, initreachable
+	// then for each final state. we look for the states that are reachable from one of 
+	// the previously to-final-reachable states 
+	gLTS removeCounreachableStates(gLTS controller) {
 
 		// find the reachable states from the initial state
-		gLTS initreachable = findReachablesfromaState(controller.s0, controller);
+		gLTS initReachable = findReachablesfromaState(controller.s0, controller);
+		gLTS result = new gLTS();
 		out.println("\nNo. of init reachable states are "
-				+ Integer.toString(initreachable.states.size()));// +
-																	// controller.draw());
+				+ Integer.toString(initReachable.states.size()) + 
+				"\nNumber of final states is: " + Integer.toString(initReachable.finals.size()) );// +
 
-		// find the reachable states to the final state
-		gLTS finalreachable = new gLTS();
+		//gLTS finalreachable = result;
+		HashMap<String, gState> orgiFinals = initReachable.finals;
 
-		out.println("\nNo. of final states are "
-				+ Integer.toString(controller.finals.size()));// +
-																// controller.draw());
-
-		for (gState fs : controller.finals.values()) {
-			out.println("\nCurrent final: " + fs.s.ID);// + controller.draw());
-			if (!finalreachable.states.containsKey(fs.s.ID)) {
-				gLTS glts = findReachablesToState(fs, controller);
-				finalreachable.states.putAll(glts.states);
-				finalreachable.trans.putAll(glts.trans);
-				out.println("No. of final reachable states are "
-						+ Integer.toString(finalreachable.states.size()));// +
-																			// controller.draw());
+		for (gState fs : orgiFinals.values()) {
+		//	out.println("Current final: " + fs.s.ID);
+			if (!result.states.containsKey(fs.s.ID)) {
+				result = findReachablesToState(fs, initReachable,result);
+				//finalreachable.states.putAll(glts.states);
+				//finalreachable.trans.putAll(glts.trans);
+			//	out.println("No. of final reachable states are "
+			//			+ Integer.toString(result.states.size()));// +
+				// controller.draw());
 			}
 		}
 
-		HashMap<String, gState> slist = new HashMap<String, gState>();
+		/*HashMap<String, gState> slist = new HashMap<String, gState>();
 
-		for (gState s : controller.states.values())
-			if (initreachable.states.get(s.s.ID) != null
-					&& finalreachable.states.get(s.s.ID) != null)
+		for (gState s : result.states.values())
+			if (finalreachable.states.get(s.s.ID) != null)
 				slist.put(s.s.ID, s);
 
-		controller.states = slist;
-		controller = removeDanglingTransitions(controller);
-		return controller;
+		//		controller.finals = slist;	
+		//		out.println( controller.draw(0,0));
+
+		result.states = slist;*/
+
+		result = removeDanglingTransitions(result);
+		return result;
 	}
 
-	private gLTS removeDanglingTransitions(gLTS controller) {
+	private gLTS removeDanglingTransitions(gLTS controller) {		
 		HashMap<String, gTransition> tlist = new HashMap<String, gTransition>();
 		for (String tid : controller.trans.keySet()) {
 			gTransition t = controller.trans.get(tid);
-			if (controller.states.get(t.src.s.ID) == null
-					|| controller.states.get(t.trg.s.ID) == null)
+			if (controller.states.get(t.src.s.ID) != null
+					&& controller.states.get(t.trg.s.ID) != null)
 				tlist.put(t.src.s.ID + t.trg.s.ID, t);
 		}
-		for (String t : tlist.keySet())
-			controller.trans.remove(t);
 
-		return controller;
+		return new gLTS("res", controller.s0, controller.states, controller.finals, tlist);
 	}
 
 	// compare plant and controller, if there is a state from which there is an
@@ -184,7 +220,10 @@ public class Synthesizer {
 	// that we have removed in the controller, then remove all its transitions
 	// and that state
 	private gLTS removeBadStates(gLTS plant, gLTS controller,
-			List<String> uncontrollableEventlist) {
+			List<String> uncontrollableEventlist, boolean commentOn) {
+
+		if(uncontrollableEventlist.size()==0)
+			return controller;
 
 		out.println("The initial state of the controller " + controller.s0.s.ID
 				+ "\n " + "The initial state of plant " + plant.s0.s.ID);
@@ -192,107 +231,126 @@ public class Synthesizer {
 		ArrayList<String> badStates = new ArrayList<String>();
 
 		for (gState plantState : plant.states.values()) {
-			// out.println("The current state of the plant " + plantState.s.ID
-			// );
+		/*	if(commentOn)
+				out.println("The current state of the plant " + plantState.s.ID
+			 );*/
 			gState controllerState = controller
 					.getStateBeginWithID(plantState.s.ID);
-
+			
 			if (controllerState != null) {
-				// out.println("The current state of the controller " +
-				// controllerState.s.ID );
-
 				ArrayList<String> controllerOutEvents = controller
 						.getOutEventsof(controllerState);
-				// out.println("Number of out events of controller " +
-				// Integer.toString(controllerOutEvents.size()) );
 
 				ArrayList<String> plantOutEvents = plant
 						.getUncontrollableEventsof(plantState,
 								uncontrollableEventlist);
-				// out.println("Number of uncontroller events of plant " +
-				// Integer.toString(plantOutEvents.size()) );
 
-				boolean notBadState = true;
+				boolean goodState = true;
 				for (String event : plantOutEvents)
-					notBadState = notBadState
-							&& (!controllerOutEvents.contains(event));
+				{
+					goodState = goodState
+							&& (controllerOutEvents.contains(event));
+						if(!goodState && commentOn)
+							out.println("The uncontrollable event " + event + " was disabled");
+				}
 
-				if (!notBadState)
+				if (!goodState)
 					badStates.add(controllerState.s.ID);
 			}
 		}
 
-		controller = controller.removeState(badStates);
-		out.println("The bad states are:\n ");
+		controller = controller.removeStates(badStates, commentOn);
 
-		for (String s : badStates)
-			out.println(s + "  ");
+		if(commentOn)
+		{
+			out.println("The bad states are:\n ");
+			for (String s : badStates)
+				out.println(s + "  ");
+		}
 
 		return controller;
 	}
 
 	private gLTS findReachablesfromaState(gState state, gLTS controller) {
 
-		HashMap<String, gState> slist = new HashMap<String, gState>();
+		HashMap<String, gState> states = new HashMap<String, gState>();
+		HashMap<String, gState> finalstates = new HashMap<String, gState>();
 		HashMap<String, gTransition> translist = new HashMap<String, gTransition>();
 		Stack<gState> stack = new Stack<gState>();
 
-		slist.put(state.s.ID, state);
-		stack.push(state);
+		states.put(state.s.ID, state);
+		stack.push(state); 
 
 		HashMap<String, Boolean> visited = new HashMap<String, Boolean>();
 
 		while (!stack.isEmpty()) {
 			gState curstate = stack.pop();
+			//out.println(curstate.s.ID + "\n");
+
 			if (visited.get(curstate.s.ID) == null) {
 				ArrayList<gTransition> pouttrans = controller
-						.getOutTransof(curstate);
+						.getOutTransof(curstate.s.ID);
 
 				Iterator<gTransition> iter = pouttrans.iterator();
 				while (iter.hasNext()) {
 					gTransition ptrans = iter.next();
-					slist.put(ptrans.trg.s.ID, ptrans.trg);
+					states.put(ptrans.trg.s.ID, ptrans.trg);
 					translist.put(ptrans.src.s.ID + ptrans.trg.s.ID, ptrans);
+					if(controller.finals.containsKey(ptrans.trg.s.ID))
+						finalstates.put(ptrans.trg.s.ID, ptrans.trg);
+					//	out.println(ptrans.src.s.ID + " -> " + ptrans.trg.s.ID + "\n");
 					stack.push(ptrans.trg);
 				}
 				visited.put(curstate.s.ID, true);
 			}
 		}
 
-		return new gLTS(controller.ID, controller.s0, slist, controller.finals,
-				translist);
+		return new gLTS(controller.ID, state, states, finalstates,translist);
 	}
 
-	private gLTS findReachablesToState(gState state, gLTS controller) {
+	private gLTS findReachablesToState(gState state, gLTS init, gLTS result) {
 
 		HashMap<String, gState> slist = new HashMap<String, gState>();
-		HashMap<String, gTransition> translist = new HashMap<String, gTransition>();
+		//	HashMap<String, gTransition> translist = new HashMap<String, gTransition>();
 		Stack<gState> stack = new Stack<gState>();
+
+		ArrayList<String> visited = new ArrayList<String>();
+
+		gLTS res = result;
+
+		if(result.states.size()>0)
+			res = new gLTS("res", result.s0, result.states, result.finals, result.trans);
 
 		slist.put(state.s.ID, state);
 		stack.push(state);
 
-		ArrayList<String> visited = new ArrayList<String>();
-
 		while (!stack.isEmpty()) {
 			gState curstate = stack.pop();
-			if (!visited.contains(curstate.s.ID)) {
-				ArrayList<gTransition> pouttrans = controller
-						.getInTransof(curstate);
+			if (!res.states.containsKey(curstate.s.ID) &&
+					!visited.contains(curstate.s.ID)) {
+				ArrayList<gTransition> pouttrans = init.getInTransof(curstate);
 
 				Iterator<gTransition> iter = pouttrans.iterator();
 				while (iter.hasNext()) {
 					gTransition ptrans = iter.next();
 					slist.put(ptrans.src.s.ID, ptrans.src);
-					translist.put(ptrans.src.s.ID + ptrans.trg.s.ID, ptrans);
+					//				translist.put(ptrans.src.s.ID + ptrans.trg.s.ID, ptrans);
+					res.trans.put(ptrans.src.s.ID + ptrans.trg.s.ID, ptrans);
 					stack.push(ptrans.src);
+					//out.println( ptrans.src.s.ID +  " is added to the stack");
 				}
 				visited.add(curstate.s.ID);
+
+				if(init.finals.containsKey(curstate.s.ID))
+					res.finals.put(curstate.s.ID, curstate);
+
 			}
 		}
+		res.states.putAll(slist);
 
-		return new gLTS(controller.ID, controller.s0, slist, controller.finals,
-				translist);
+		//		return new gLTS(controller.ID, controller.s0, slist, controller.finals,
+		//				translist);
+		return res;
 	}
 
 	private gLTS getForwardablegLTS(gLTS controller,
@@ -315,7 +373,7 @@ public class Synthesizer {
 
 			if (!visited.contains(curstate.s.ID) && !isFinalPlanState) {
 				ArrayList<gTransition> allOutTrans = controller
-						.getOutTransof(curstate);
+						.getOutTransof(curstate.s.ID);
 				// ArrayList<gTransition> reconfigTrans =
 				// findReconfigAction(allOutTrans);
 				Iterator<gTransition> iter = allOutTrans.iterator();
@@ -328,7 +386,7 @@ public class Synthesizer {
 					if (!visited.contains(ptrans.trg.s.ID)) {
 						slist.put(ptrans.trg.s.ID, ptrans.trg);
 						translist
-								.put(ptrans.src.s.ID + ptrans.trg.s.ID, ptrans);
+						.put(ptrans.src.s.ID + ptrans.trg.s.ID, ptrans);
 						stack.push(ptrans.trg);
 					}
 				}
@@ -361,7 +419,7 @@ public class Synthesizer {
 
 			if (!visited.contains(curstate.s.ID) && !isFinalPlanState) {
 				ArrayList<gTransition> allOutTrans = controller
-						.getOutTransof(curstate);
+						.getOutTransof(curstate.s.ID);
 				ArrayList<gTransition> reconfigTrans = findReconfigAction(allOutTrans);
 				Iterator<gTransition> iter = (reconfigTrans.size() > 0 ? reconfigTrans
 						.iterator() : allOutTrans.iterator());
@@ -401,14 +459,14 @@ public class Synthesizer {
 		out.println("\nNo States/Transitions of Prioritized Controller:"
 				+ Integer.toString(controller.states.size()) + "/"
 				+ Integer.toString(controller.trans.size()));// +
-																// controller.draw());
+		// controller.draw());
 
 		controller = removeCounreachableStates(controller);
 		out.println("No States/Transitions of After Removed Counaccessible States:"
 				+ Integer.toString(controller.states.size())
 				+ "/"
 				+ Integer.toString(controller.trans.size()));// +
-																// controller.draw());
+		// controller.draw());
 
 		controller = removeDanglingTransitions(controller);
 		MainCS.putIntoFile(controller.draw(0, 75), outPath,
@@ -416,7 +474,7 @@ public class Synthesizer {
 		out.println("No States/Transitions of Final Adaptor:"
 				+ Integer.toString(controller.states.size()) + "/"
 				+ Integer.toString(controller.trans.size()));// +
-																// controller.draw());
+		// controller.draw());
 
 		return controller;
 	}

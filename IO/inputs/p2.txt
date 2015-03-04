@@ -1,0 +1,6 @@
+digraph G {
+  s0 -> s0 [label="(!srv3.serve[x])"];
+  s0 -> s1 [label="(srv3.serve[x]) && (6:srv2$7:srv3|6=>7:srv2srv3)"];
+  s1 -> s1 [label="(6:srv2$7:srv3|6=>7:srv2srv3)"];
+  s1 -> s0 [label="(srv3.response[y]) && (6:srv2$7:srv3|6=>7:srv2srv3)"];
+}

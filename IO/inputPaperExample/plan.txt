@@ -1,5 +1,6 @@
 digraph { 
 pa->pb[label="env.del(compC)"];
 pb->pc[label= "end.add(compB)"];
-pc->pd[label= "env.del(compD)"];
+pc->pd[label= "env.conn(compA,compB)"];
+pd->pe[label= "env.del(compD)"];
 }

@@ -1,0 +1,5 @@
+digraph G {
+  s00 -> s00 [label="!(env.conn[disp,srv3])"];
+  s00 -> s0  [label="(7:srv3$8:DBA|7=>8:srv3DBA) &&  (env.conn[disp,srv3])"];
+  s0 -> s0   [label="!Y.XXX[]"];
+}

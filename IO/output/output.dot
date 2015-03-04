@@ -1,0 +1,360 @@
+
+
+ The plan is Pl1
+ The property is p1
+ The uncontrollanle events are p1
+Number of states/transitions: 17136/58626
+Model Construction Time:12639
+Number of states/transitions: 9612/33921
+Synthesis Time:100521
+
+
+
+ The plan is Pl1
+ The property is p1
+ The uncontrollanle events are p2
+Number of states/transitions: 17136/58626
+Model Construction Time:11800
+Number of states/transitions: 9612/33921
+Synthesis Time:136034
+
+
+
+ The plan is Pl1
+ The property is p1
+ The uncontrollanle events are p3
+Number of states/transitions: 17136/58626
+Model Construction Time:11779
+Number of states/transitions: 9612/33921
+Synthesis Time:143832
+
+
+
+ The plan is Pl1
+ The property is p2
+ The uncontrollanle events are p1
+Number of states/transitions: 17136/58626
+Model Construction Time:11853
+Number of states/transitions: 7788/27031
+Synthesis Time:80786
+
+
+
+ The plan is Pl1
+ The property is p2
+ The uncontrollanle events are p2
+Number of states/transitions: 17136/58626
+Model Construction Time:11906
+Number of states/transitions: 7788/27031
+Synthesis Time:108880
+
+
+
+ The plan is Pl1
+ The property is p2
+ The uncontrollanle events are p3
+Number of states/transitions: 17136/58626
+Model Construction Time:11880
+Number of states/transitions: 7788/27031
+Synthesis Time:107898
+
+
+
+ The plan is Pl1
+ The property is p3
+ The uncontrollanle events are p1
+Number of states/transitions: 17136/58626
+Model Construction Time:11871
+Number of states/transitions: 10390/35782
+Synthesis Time:127380
+
+
+
+ The plan is Pl1
+ The property is p3
+ The uncontrollanle events are p2
+Number of states/transitions: 17136/58626
+Model Construction Time:11715
+Number of states/transitions: 10390/35782
+Synthesis Time:178683
+
+
+
+ The plan is Pl1
+ The property is p3
+ The uncontrollanle events are p3
+Number of states/transitions: 17136/58626
+Model Construction Time:12237
+Number of states/transitions: 10390/35782
+Synthesis Time:178580
+
+
+
+ The plan is Pl1
+ The property is p4
+ The uncontrollanle events are p1
+Number of states/transitions: 17136/58626
+Model Construction Time:11676
+Number of states/transitions: 0/0
+Synthesis Time:26451
+
+
+
+ The plan is Pl1
+ The property is p4
+ The uncontrollanle events are p2
+Number of states/transitions: 17136/58626
+Model Construction Time:11597
+Number of states/transitions: 0/0
+Synthesis Time:41915
+
+
+
+ The plan is Pl1
+ The property is p4
+ The uncontrollanle events are p3
+Number of states/transitions: 17136/58626
+Model Construction Time:11717
+Number of states/transitions: 0/0
+Synthesis Time:41779
+
+
+
+ The plan is Pl2
+ The property is p1
+ The uncontrollanle events are p1
+Number of states/transitions: 14160/55032
+Model Construction Time:15740
+Number of states/transitions: 8328/34335
+Synthesis Time:109647
+
+
+
+ The plan is Pl2
+ The property is p1
+ The uncontrollanle events are p2
+Number of states/transitions: 14160/55032
+Model Construction Time:15580
+Number of states/transitions: 8328/34335
+Synthesis Time:163537
+
+
+
+ The plan is Pl2
+ The property is p1
+ The uncontrollanle events are p3
+Number of states/transitions: 14160/55032
+Model Construction Time:15752
+Number of states/transitions: 8328/34335
+Synthesis Time:154002
+
+
+
+ The plan is Pl2
+ The property is p2
+ The uncontrollanle events are p1
+Number of states/transitions: 14160/55032
+Model Construction Time:15834
+Number of states/transitions: 9624/40052
+Synthesis Time:333309
+
+
+
+ The plan is Pl2
+ The property is p2
+ The uncontrollanle events are p2
+Number of states/transitions: 14160/55032
+Model Construction Time:15823
+Number of states/transitions: 9624/40052
+Synthesis Time:381751
+
+
+
+ The plan is Pl2
+ The property is p2
+ The uncontrollanle events are p3
+Number of states/transitions: 14160/55032
+Model Construction Time:15794
+Number of states/transitions: 9624/40052
+Synthesis Time:386136
+
+
+
+ The plan is Pl2
+ The property is p3
+ The uncontrollanle events are p1
+Number of states/transitions: 14160/55032
+Model Construction Time:15600
+Number of states/transitions: 9274/37285
+Synthesis Time:189345
+
+
+
+ The plan is Pl2
+ The property is p3
+ The uncontrollanle events are p2
+Number of states/transitions: 14160/55032
+Model Construction Time:16102
+Number of states/transitions: 9274/37285
+Synthesis Time:256734
+
+
+
+ The plan is Pl2
+ The property is p3
+ The uncontrollanle events are p3
+Number of states/transitions: 14160/55032
+Model Construction Time:15730
+Number of states/transitions: 9274/37285
+Synthesis Time:9229737
+
+
+
+ The plan is Pl2
+ The property is p4
+ The uncontrollanle events are p1
+Number of states/transitions: 14160/55032
+Model Construction Time:3616270
+Number of states/transitions: 8328/34335
+Synthesis Time:9678750
+
+
+
+ The plan is Pl2
+ The property is p4
+ The uncontrollanle events are p2
+Number of states/transitions: 14160/55032
+Model Construction Time:21692
+Number of states/transitions: 8328/34335
+Synthesis Time:14555424
+
+
+
+ The plan is Pl2
+ The property is p4
+ The uncontrollanle events are p3
+Number of states/transitions: 14160/55032
+Model Construction Time:17914
+Number of states/transitions: 8328/34335
+Synthesis Time:10960916
+
+
+
+ The plan is Pl3
+ The property is p1
+ The uncontrollanle events are p1
+Number of states/transitions: 25728/103422
+Model Construction Time:5604
+Number of states/transitions: 25728/103422
+Synthesis Time:4263094
+
+
+
+ The plan is Pl3
+ The property is p1
+ The uncontrollanle events are p2
+Number of states/transitions: 25728/103422
+Model Construction Time:5189
+Number of states/transitions: 25728/103422
+Synthesis Time:2384475
+
+
+
+ The plan is Pl3
+ The property is p1
+ The uncontrollanle events are p3
+Number of states/transitions: 25728/103422
+Model Construction Time:4529
+Number of states/transitions: 25728/103422
+Synthesis Time:2299082
+
+
+
+ The plan is Pl3
+ The property is p2
+ The uncontrollanle events are p1
+Number of states/transitions: 25728/103422
+Model Construction Time:4461
+Number of states/transitions: 9744/37263
+Synthesis Time:645350
+
+
+
+ The plan is Pl3
+ The property is p2
+ The uncontrollanle events are p2
+Number of states/transitions: 25728/103422
+Model Construction Time:4412
+Number of states/transitions: 9744/37263
+Synthesis Time:896704
+
+
+
+ The plan is Pl3
+ The property is p2
+ The uncontrollanle events are p3
+Number of states/transitions: 25728/103422
+Model Construction Time:4665
+Number of states/transitions: 9744/37263
+Synthesis Time:831629
+
+
+
+ The plan is Pl3
+ The property is p3
+ The uncontrollanle events are p1
+Number of states/transitions: 25728/103422
+Model Construction Time:4447
+Number of states/transitions: 30512/118080
+Synthesis Time:4445891
+
+
+
+ The plan is Pl3
+ The property is p3
+ The uncontrollanle events are p2
+Number of states/transitions: 25728/103422
+Model Construction Time:4301
+Number of states/transitions: 30512/118080
+Synthesis Time:4368948
+
+
+
+ The plan is Pl3
+ The property is p3
+ The uncontrollanle events are p3
+Number of states/transitions: 25728/103422
+Model Construction Time:4059
+Number of states/transitions: 30512/118080
+Synthesis Time:4614943
+
+
+
+ The plan is Pl3
+ The property is p4
+ The uncontrollanle events are p1
+Number of states/transitions: 25728/103422
+Model Construction Time:4524
+Number of states/transitions: 0/0
+Synthesis Time:10
+
+
+
+ The plan is Pl3
+ The property is p4
+ The uncontrollanle events are p2
+Number of states/transitions: 25728/103422
+Model Construction Time:4428
+Number of states/transitions: 0/0
+Synthesis Time:19
+
+
+
+ The plan is Pl3
+ The property is p4
+ The uncontrollanle events are p3
+Number of states/transitions: 25728/103422
+Model Construction Time:4552
+Number of states/transitions: 0/0
+Synthesis Time:22
+

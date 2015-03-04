@@ -1,0 +1,20 @@
+digraph { 
+pm[fillcolor = red,style=filled];
+pg->ph[label= "env.conn(disp,srv2)"];
+pj->pl1[label= "env.dis(srv3,DBA)"];
+pi->pj[label= "env.dis(disp,srv3)"];
+ph->pi1[label= "env.conn(srv2,DBB)"];
+pi1->pi[label= "env.conn(srv2,agg)"];
+pl2->pm[label= "env.dis(srv3,DBA)"];
+pj->pl2[label= "env.dis(srv3,agg)"];
+pa->pb[label= "env.add(ch)"];
+pc->pd[label= "env.add(ch)"];
+pl1->pm[label= "env.dis(srv3,agg)"];
+pb->pd[label= "env.add(srv2)"];
+pa->pc[label= "end.add(srv2)"];
+pe->pf[label= "env.conn(receiver,ch)"];
+pf->pg1[label= "env.conn(srv2,srv3)"];
+pd->pe[label= "env.del(lgr)"];
+pg1->pg[label= "env.conn(srv3,srv2)"];
+
+}

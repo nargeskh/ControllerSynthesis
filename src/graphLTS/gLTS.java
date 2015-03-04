@@ -21,6 +21,10 @@ import java.util.Stack;
 
 //import org.jgrapht.DirectedGraph;
 
+
+
+
+
 import basics.ACTIVE;
 
 public class gLTS {
@@ -66,19 +70,22 @@ public class gLTS {
 
 	private LTS createLTS(Graph model, ArrayList<LTS> LTSs, boolean commOn,
 			HashMap<String, gState> initgState) {
-		ArrayList<LTS> original = new ArrayList<LTS>();
+
+		ArrayList<LTS> newConstructedLTSs = new ArrayList<LTS>();
+
 		for (int idx = 0; idx < LTSs.size(); idx++) {
+			// get the LTS with the ID=idx
 			LTS lts = LTSs.get(idx);
 
-			// if the model does not contain lts, we replace it with an empty
-			// LTS
+			// if the initial structure does not contain lts, i.e. lts is inactive, 
+			// we replace it with an empty LTS
 			int ltsID = LTS.getOwnerID(lts.ID, LTSs);
 			if (model.findNode(ltsID + 1) == null) {
-				LTS tmp = lts.buildInactiveLTS();
-				original.add(idx, tmp);
+				LTS tmp = lts.buildInactiveLTS(lts.NA.ID);
+				newConstructedLTSs.add(idx, tmp);
 				out.println(lts.ID + " is inactive");
 			} else
-				original.add(idx, lts.copyLTS());
+				newConstructedLTSs.add(idx, lts.copyLTS());
 		}
 		LTS lts = new LTS();
 
@@ -87,7 +94,7 @@ public class gLTS {
 		for (String sid : initgState.keySet())
 			initStates.add(initgState.get(sid).s);
 
-		lts = lts.product(original, model, commOn, initStates);
+		lts = lts.product(newConstructedLTSs, model, commOn, initStates);
 		return lts;
 	}
 
@@ -120,13 +127,26 @@ public class gLTS {
 			gt.trg = getGStatebyID(gts.states, t.trg.ID + id);
 			gt.lab = t.lab;
 			// MODIFIED: gts.trans.put(gt.src.s.ID +gt.trg.s.ID , gt);
-			gts.trans.put(gt.getLabel(), gt);
+			if (gts.getDeterminTrans(t.src.ID,t.lab))
+				out.println("\n\n @@@@@@@@@@@@@@@@@@@@@@@@@@@@ NON-DTEREMINISIM @@@@@@@@@@@@@@@@");
+			else	
+				gts.trans.put(gt.getLabel(), gt);
 		}
 
 		// out.println("\nThe  number of states of new created gLTS " + gts.ID +
 		// " is " + Integer.toString(gts.states.size()));
 		return gts;
 	}
+
+	private boolean getDeterminTrans(String src, Event lab) {
+		// TODO Auto-generated method stub
+		ArrayList<gTransition>  trs = getOutTransof(src);
+		for(gTransition t:trs)
+			if (t.lab.print_event().equals(lab.print_event()))
+				return true;
+		return false;
+	}
+
 
 	public gLTS applyReconfiguration(ArrayList<LTS> AllComponentsLTSs,
 			gLTS plan, boolean comOn) {
@@ -143,7 +163,8 @@ public class gLTS {
 		gState initgs = new gState(is0, plan.s0.g);
 		initList.put(initgs.s.ID, initgs);
 
-		boolean isFinalPlanState = plan.getOutTransof(plan.s0).size() == 0;
+		boolean isFinalPlanState = plan.finals.containsKey(plan.s0.s.ID);
+
 		gltsvar = gltsvar.creategLTS(plan.s0.g, AllComponentsLTSs, plan.s0.s.ID
 				+ "@0", initList, comOn);
 		initgs = gltsvar.getStatebyID(is0.ID + plan.s0.s.ID + "@0");
@@ -164,11 +185,11 @@ public class gLTS {
 					+ "\nNo States/Transitions in " + top + ": "
 					+ Integer.toString(srcgLTS.states.size()) + "/"
 					+ Integer.toString(srcgLTS.trans.size()));// +
-																// srcgLTS.draw());
+			// srcgLTS.draw());
 
 			gState planCurs = plan.getStatebyID(top.split("@")[0]);
 
-			Iterator<gTransition> iter = plan.getOutTransof(planCurs)
+			Iterator<gTransition> iter = plan.getOutTransof(planCurs.s.ID)
 					.iterator();
 			while (iter.hasNext()) {
 				gTransition plantrans = iter.next();
@@ -184,7 +205,8 @@ public class gLTS {
 				newPlanStateID = plantrans.trg.s.ID + "@"
 						+ Integer.toString(counter++);
 				stack.push(newPlanStateID);
-				isFinalPlanState = plan.getOutTransof(plantrans.trg).size() == 0;
+				isFinalPlanState = plan.finals.containsKey(plantrans.trg.s.ID);
+				//getOutTransof(plantrans.trg.s.ID).size() == 0;
 
 				initList = srcgLTS.getInitStatesforReconfig(plantrans,
 						AllComponentsLTSs, planCurs.s.ID);
@@ -207,11 +229,12 @@ public class gLTS {
 				else
 					trgFinalStates = srcgLTS.conn_disconn_component(plantrans,
 							trggLTS, top, newPlanStateID);
+
 				if (isFinalPlanState)
 					trggLTS.finals = trgFinalStates;
 			} // check for all transitions
-				// out.println("The state " + planCurs.s.ID +
-				// " is added to the visited list!" );
+			// out.println("The state " + planCurs.s.ID +
+			// " is added to the visited list!" );
 		}// stack while
 		out.println("\nNumber of gLTSs " + Integer.toString(gLTSMap.size()));
 		return unionOfGLTs(initgs, gLTSMap);
@@ -294,6 +317,9 @@ public class gLTS {
 			I = graph.generateIMapping().replace(edge + "<->" + edge, "");
 			R = L.replace(edge, "");
 			R = R.replace(";;", ";");
+			R = R.replace("|;", "|");
+			I = I.replace("|;", "|");			
+			I = I.replace(";;", ";");			
 		} else {
 			out.println("The action " + name + args + " is not supported");
 			return graph;
@@ -336,13 +362,13 @@ public class gLTS {
 
 	}
 
-	public ArrayList<gTransition> getOutTransof(gState s) {
+	public ArrayList<gTransition> getOutTransof(String s) {
 		ArrayList<gTransition> res = new ArrayList<gTransition>();
 
 		Iterator<gTransition> itera = trans.values().iterator();
 		while (itera.hasNext()) {
 			gTransition t1 = itera.next();
-			if (t1.src.equals(s))
+			if (t1.src.s.ID.equals(s))
 				res.add(t1);
 		}
 		return res;
@@ -407,8 +433,8 @@ public class gLTS {
 				boolean areconnected = true;
 				for (int idx = 0; idx < ltssize; idx++)
 					areconnected = areconnected
-							&& (idx != ltsID ? str1[idx].compareTo(str2[idx]) == 0
-									: true);
+					&& (idx != ltsID ? str1[idx].compareTo(str2[idx]) == 0
+					: true);
 
 				if (areconnected)
 					res.put(src.s.ID + gs.s.ID, new gTransition(plantrans.lab,
@@ -487,13 +513,38 @@ public class gLTS {
 		return states.get(sID);
 	}
 
+	public String connectingNodesDraw() {
+		String g = "digraph { \n";
+		if (states.size() <= 1)
+			g += s0.s.ID + "[fillcolor = red]";
+		else {
+			Iterator<gTransition> iter = trans.values().iterator();
+			while (iter.hasNext()) {
+				gTransition t = iter.next();
+				if(t.lab.name.contains("add") ||
+						t.lab.name.contains("del") ||
+						t.lab.name.contains("dis") ||
+						t.lab.name.contains("conn"))
+				{
+					g += (t.src.s.ID) + "->";
+					g += (t.trg.s.ID);
+					g += "[label= \"" + t.lab.print_event() + "\"];\n";
+				}
+			}
+
+		}
+		return g.replace("@", "") + "\n}";
+	}
+
+
 	public String draw(int x, int dist) {
 		String g = "digraph { \n";
 		if (states.size() <= 1)
 			g += s0.s.ID + "[fillcolor = red]";
 		else {
 
-			Iterator<gState> iters = states.values().iterator();
+			/*			
+			 Iterator<gState> iters = states.values().iterator();
 			int dy = 0;
 			while (iters.hasNext()) {
 
@@ -503,11 +554,18 @@ public class gLTS {
 				dy += dist;
 				//x += 10;
 			}
+			 */
+			Iterator<gState>  iters = finals.values().iterator();
+			while (iters.hasNext()) {
+				gState t = iters.next();
+				g += t.s.ID + "[fillcolor = red,style=filled];\n";
+			}
 
 			Iterator<gTransition> iter = trans.values().iterator();
 			while (iter.hasNext()) {
 				gTransition t = iter.next();
-				if (!t.lab.print_event().contains("NOP")) {
+				//if (!t.lab.print_event().contains("NOP")) 
+				{
 					g += (t.src.s.ID) + "->";
 					g += (t.trg.s.ID);
 					g += "[label= \"" + t.lab.print_event() + "\"];\n";
@@ -521,6 +579,100 @@ public class gLTS {
 				+ Integer.toString(trans.size()) + "\nNumber of states: "
 				+ Integer.toString(states.size()));
 		return g.replace("@", "") + "\n}";
+
+	}
+
+	public String filter_draw(int x, int dist,String probtrans, CharSequence probstate) {
+		String g = "digraph { \n";
+		if (states.size() <= 1)
+			g += s0.s.ID + "[fillcolor = red]";
+		else {
+
+			/*			
+			 Iterator<gState> iters = states.values().iterator();
+			int dy = 0;
+			while (iters.hasNext()) {
+
+				gState t = iters.next();
+				g += t.s.ID + "[pos=" + "\"" + x + ","  + dy
+						+ "!\"];\n";
+				dy += dist;
+				//x += 10;
+			}
+			 */
+			Iterator<gState>  iters = finals.values().iterator();
+			while (iters.hasNext()) {
+				gState t = iters.next();
+				if(!t.s.ID.contains(probstate)) 
+					g += t.s.ID + "[fillcolor = red,style=filled];\n";
+			}
+
+			Iterator<gTransition> iter = trans.values().iterator();
+			while (iter.hasNext()) {
+				gTransition t = iter.next();
+				if (!t.lab.name.contains(probtrans) &&
+						!t.src.s.ID.contains(probstate) &&
+						!t.trg.s.ID.contains(probstate)) 
+				{
+					g += (t.src.s.ID) + "->";
+					g += (t.trg.s.ID);
+					g += "[label= \"" + t.lab.print_event() + "\"];\n";
+					// a -> b[label="0.2",weight="0.2"];
+				}
+			}
+
+		}
+
+		out.println("\n\nNumber of transitions: "
+				+ Integer.toString(trans.size()) + "\nNumber of states: "
+				+ Integer.toString(states.size()));
+		return g.replace("@", "") + "\n}";
+
+	}
+
+
+	public String filter_gml_draw(int x, int dist,String probtrans, CharSequence probstate) {
+		String g = "graph [ \n";
+		if (states.size() <= 1)
+			g += s0.s.ID + "[fillcolor = red]";
+		else {
+			HashMap<String, String> stateIDs = new HashMap<String, String>();
+
+			int i = 1;
+			Iterator<gState> siter = states.values().iterator();
+			while (siter.hasNext()) {
+				gState s = siter.next();
+				if (	!s.s.ID.contains(probstate) ) 
+				{
+					stateIDs.put(s.s.ID, Integer.toString(i));
+					g += " node [ \n" +
+							"id " + Integer.toString(i++) + "\n" +
+							"type \"circle\" \n fill \"#000000\"\n" +	
+							"label " + "\"" + s.s.ID + "\"\n" +
+							"]\n";
+				}	
+			}	
+
+			Iterator<gTransition> iter = trans.values().iterator();
+			while (iter.hasNext()) {
+				gTransition t = iter.next();
+				if (!t.lab.name.contains(probtrans) &&
+						!t.src.s.ID.contains(probstate) &&
+						!t.trg.s.ID.contains(probstate)) 
+				{
+					g += "edge [ \n " +
+							"source " + stateIDs.get(t.src.s.ID) + " \n" +
+							"target " + stateIDs.get(t.trg.s.ID) + "\n" +
+							"label \"" + t.lab.print_event() + "\"]\n";
+					// a -> b[label="0.2",weight="0.2"];
+				}
+			}
+		}
+
+		out.println("\n\nNumber of transitions: "
+				+ Integer.toString(trans.size()) + "\nNumber of states: "
+				+ Integer.toString(states.size()));
+		return g.replace("@", "") + "\n]";
 
 	}
 
@@ -544,7 +696,7 @@ public class gLTS {
 				gTransition t = iter.next();
 				if ((t.lab.name.equals("add") || t.lab.name.equals("del")
 						|| t.lab.name.equals("conn") || t.lab.name
-							.equals("discon"))
+						.equals("discon"))
 						&& !t.src.s.ID.contains(prob)
 						&& !t.trg.s.ID.contains(prob))
 					g += "\n" + t.src.s.ID + "->" + t.trg.s.ID + "[label=\""
@@ -579,13 +731,14 @@ public class gLTS {
 
 	public gState getGStatebyID(String iD2, Graph model) {
 
-		Iterator<gState> iter = states.values().iterator();
-
-		while (iter.hasNext()) {
-			gState s = iter.next();
-			if (s.s.ID.compareTo(iD2) == 0 && s.g.iso(model))
-				return s;
-		}
+		//		Iterator<gState> iter = states.keys().iterator();
+		//
+		gState s = states.get(iD2);
+		//		while (iter.hasNext()) {
+		//			gState s = iter.next();
+		if (s != null && s.g.iso(model))
+			return s;
+		//		}
 		return null;
 	}
 
@@ -756,6 +909,14 @@ public class gLTS {
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
 		}
+
+		Iterator<gState> iter = glts.states.values().iterator();
+		while (iter.hasNext()) {
+			gState gs = iter.next();
+			if(glts.getOutTransof(gs.s.ID).size() == 0)
+				glts.finals.put(gs.s.ID, gs);
+		}
+
 		return glts;
 	}
 
@@ -790,7 +951,7 @@ public class gLTS {
 
 	}
 
-	//prob is the list of prohibited states?!
+	//prob is the list of prohibited events ?!
 	public gLTS getGLTSofConfig(String configID, String prob) {
 
 		gLTS res = new gLTS();
@@ -864,7 +1025,10 @@ public class gLTS {
 
 	public ArrayList<String> getUncontrollableEventsof(gState state,
 			List<String> uncontrollableEventlist) {
+
 		ArrayList<String> res = new ArrayList<String>();
+		if (uncontrollableEventlist.size()==0)
+			return res;
 
 		Iterator<gTransition> itera = trans.values().iterator();
 		while (itera.hasNext()) {
@@ -876,10 +1040,11 @@ public class gLTS {
 		return res;
 	}
 
-	public gLTS removeState(ArrayList<String> badStates) {
+	public gLTS removeStates(ArrayList<String> badStates, boolean commentOn) {
 
 		if (badStates.isEmpty())
 			return this;
+
 		HashMap<String, gTransition> resTrans = new HashMap<String, gTransition>();
 
 		for (gTransition t : this.trans.values())
@@ -889,9 +1054,10 @@ public class gLTS {
 				// resTrans.remove(t_label);
 				resTrans.put(t.getLabel(), t);
 			else
-				out.println("The transition from " + t.src.s.ID + " to "
-						+ t.trg.s.ID + " with label " + t.lab.print_event()
-						+ " was removed");
+				if(commentOn)
+					out.println("The transition from " + t.src.s.ID + " to "
+							+ t.trg.s.ID + " with label " + t.lab.print_event()
+							+ " was removed");
 
 		for (String s : badStates) {
 			this.states.remove(s);
@@ -902,9 +1068,15 @@ public class gLTS {
 			if (s0.equals(s))
 				s0 = null;
 
-			out.println("The state  " + s + " was removed");
+			if(commentOn)
+				out.println("The state  " + s + " was removed");
 		}
 
 		return new gLTS(ID, s0, states, finals, resTrans);
 	}
+
+	public boolean isfinalState(String iD2) {
+		return finals.containsKey(iD2);
+	}
+
 }

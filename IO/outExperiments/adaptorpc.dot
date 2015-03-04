@@ -1,3 +1,7 @@
 digraph { 
-null[fillcolor = red]
+a0c2d1b1pc3s01->a1c2d1b1pc3s01[label= "X.a()"];
+a4c2d1b1pc6s01->a0c2d1b1pc6s01[label= "X.e()"];
+a0c2d1b1pc6s01->a1c2d1b1pc6s01[label= "X.a()"];
+a4c2d1b1pc3s01->a0c2d1b1pc3s01[label= "X.e()"];
+
 }

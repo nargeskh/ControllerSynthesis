@@ -94,7 +94,7 @@ public class WODESMain {
 		//		GraphAutomata spec = GraphAutomata.parseGraphAutomata("spec", "s0", "s0",inPath);
 
 		//this the example with no deadlock 
-		GraphAutomata spec = GraphAutomata.parseGraphAutomata("NoDeadlockSpec", "s0", "s0",inPath);
+		GraphAutomata spec = GraphAutomata.parseGraphAutomata("spec", "s0", "s0",inPath);
 
 		List<String> uncontrolledEvents = new ArrayList<String>();
 		//uncontrolledEvents.add("X.a()");

@@ -1,0 +1,28 @@
+digraph { 
+ layout="neato"
+ compound = "true" margin = "0" node [sha=ellipse,fixedsize=true,width=0.9];subgraph clusterpd{
+a4c3d0e0b0pd3s0->a0c3d0e0b0pd3s0[label= "X.e()"];
+
+}subgraph clusterpe{
+a4c3d1e0b0pe4s0->a0c3d1e0b0pe4s0[label= "X.e()"];
+
+}subgraph clusterpa{
+null[fillcolor = red]
+}subgraph clusterpb{
+a4c3d0e0b2pb1s0->a0c3d0e0b2pb1s0[label= "X.e()"];
+a0c3d0e0b2pb1s0->a1c3d0e0b2pb1s1[label= "X.a()"];
+a1c3d0e0b2pb1s1->a4c3d0e0b2pb1s0[label= "X.d()"];
+
+}subgraph clusterpc{
+a4c3d0e0b0pc2s0->a0c3d0e0b0pc2s0[label= "X.e()"];
+a1c3d0e0b0pc2s1->a4c3d0e0b0pc2s0[label= "X.d()"];
+a0c3d0e0b0pc2s0->a1c3d0e0b0pc2s1[label= "X.a()"];
+
+}
+a4c3d0e0b0pc2@s0->a4c3d0e0b0pd3@s0[label="env.conn(compA,compB)" , style="dashed"]
+a0c0d0e0b2pa0@s0->a0c3d0e0b2pb1@s0[label="env.del(compC)" , style="dashed"]
+a4c3d0e0b2pb1@s0->a4c3d0e0b0pc2@s0[label="end.add(compB)" , style="dashed"]
+a0c3d0e0b0pd3@s0->a0c3d1e0b0pe4@s0[label="env.del(compD)" , style="dashed"]
+a4c3d0e0b0pd3@s0->a4c3d1e0b0pe4@s0[label="env.del(compD)" , style="dashed"]
+a0c3d0e0b2pb1@s0->a0c3d0e0b0pc2@s0[label="end.add(compB)" , style="dashed"]
+a0c3d0e0b0pc2@s0->a0c3d0e0b0pd3@s0[label="env.conn(compA,compB)" , style="dashed"]}
